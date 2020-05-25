@@ -6,5 +6,5 @@ object AndroidConfig {
     const val versionCode = 1
     const val versionName = "2020.05.001"
 
-    const val applicationId = "me.scraplesh.hostdraft"
+    const val applicationId = "me.scraplesh.hotsdraft"
 }

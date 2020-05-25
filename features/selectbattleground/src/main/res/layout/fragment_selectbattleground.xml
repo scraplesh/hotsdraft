@@ -1,12 +1,468 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Battleground"
-        android:layout_gravity="center"
-        />
-</FrameLayout>
+        android:orientation="vertical"
+        android:padding="@dimen/common_padding"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_alterac_pass"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_alterac_pass"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/alterac_pass"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_battlefield_of_eternity"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground__battlefield_of_eternity"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/battlefield_of_eternity"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_blackhearts_bay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_blackhearts_bay"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/blackhearts_bay"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_braxis_holdout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_braxis_holdout"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/braxis_holdout"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_cursed_hollow"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_cursed_hollow"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/cursed_hollow"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_dragon_shire"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_dragon_shire"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/dragon_shire"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_garden_of_terror"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_garden_of_terror"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/garden_of_terror"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_hanamura_temple"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_hanamura_temple"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/hanamura_temple"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_haunted_mines"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_haunted_mines"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/haunted_mines"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_infernal_shrines"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_infernal_shrines"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/infernal_shrines"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_sky_temple"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_sky_temple"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/sky_temple"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_tomb_of_the_spider_queen"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_tomb_of_the_spider_queen"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/tomb_of_the_spider_queen"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_towers_of_doom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_towers_of_doom"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/towers_of_doom"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_selectbattleground_volskaya_foundry"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_volskaya_foundry"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/volskaya_foundry"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        +<androidx.cardview.widget.CardView
+        android:id="@+id/cardview_selectbattleground_warhead_junction"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/battleground_height"
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="@dimen/battleground_corner_radius"
+            android:layout_marginTop="@dimen/common_padding"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/battleground_warhead_junction"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/warhead_junction"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="@dimen/battleground_title"
+                android:textStyle="bold"
+                android:background="@color/black_semitransparent"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
+

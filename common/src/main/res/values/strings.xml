@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alterac_pass">Alterac Pass</string>
+    <string name="battlefield_of_eternity">Battlefield of Eternity</string>
+    <string name="blackhearts_bay">Blackheart\'s Bay</string>
+    <string name="braxis_holdout">Braxis Holdout</string>
+    <string name="cursed_hollow">Cursed Hollow</string>
+    <string name="dragon_shire">Dragon Shire</string>
+    <string name="garden_of_terror">Garden of Terror</string>
+    <string name="hanamura_temple">Hanamura Temple</string>
+    <string name="haunted_mines">Haunted Mines</string>
+    <string name="infernal_shrines">Infernal Shrines</string>
+    <string name="sky_temple">Sky Temple</string>
+    <string name="tomb_of_the_spider_queen">Tomb of the Spider Queen</string>
+    <string name="towers_of_doom">Towers of Doom</string>
+    <string name="volskaya_foundry">Volskaya Foundry</string>
+    <string name="warhead_junction">Warhead Junction</string>
+</resources>

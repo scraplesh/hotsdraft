@@ -1,6 +1,7 @@
 include(
     ":app",
     ":domain",
+    ":common",
     // region features
     ":feature-selectbattleground"
 //    ":feature-draft"

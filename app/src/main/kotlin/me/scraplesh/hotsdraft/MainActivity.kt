@@ -2,7 +2,7 @@ package me.scraplesh.hotsdraft
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import me.scraplesh.hotsdraft.navigation.Coordinator
+import me.scraplesh.hotsdraft.common.navigation.Coordinator
 import me.scraplesh.hotsdraft.navigation.HotsDraftNavigationEvent
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf

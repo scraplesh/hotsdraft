@@ -30,11 +30,17 @@ android {
         sourceCompatibility = Versions.java
         targetCompatibility = Versions.java
     }
+
+    sourceSets.getByName("main") {
+        java.srcDir("src/main/kotlin")
+    }
 }
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":common"))
     implementation(Deps.kotlinStdLib)
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxConstraintLayout)
+    implementation(Deps.androidxCardView)
 }

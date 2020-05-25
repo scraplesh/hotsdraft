@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-android-extensions")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -27,7 +28,9 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-        getByName("debug") {}
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+        }
     }
 
     compileOptions {
@@ -42,9 +45,11 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":common"))
     implementation(project(":feature-selectbattleground"))
     implementation(Deps.androidxAppCompat)
     implementation(Deps.cicerone)
+    implementation(Deps.firebaseAnalytics)
     implementation(Deps.koinCore)
     implementation(Deps.koinScope)
     implementation(Deps.kotlinStdLib)
