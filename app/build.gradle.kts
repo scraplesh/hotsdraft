@@ -1,0 +1,60 @@
+//import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
+plugins {
+    id("com.android.application")
+    kotlin("android")
+    id("kotlin-android-extensions")
+}
+
+android {
+    compileSdkVersion(AndroidConfig.compileSdkVersion)
+
+    defaultConfig {
+        applicationId = AndroidConfig.applicationId
+        minSdkVersion(AndroidConfig.minSdkVersion)
+        targetSdkVersion(AndroidConfig.targetSdkVersion)
+        versionCode = AndroidConfig.versionCode
+        versionName = AndroidConfig.versionName
+
+        androidExtensions {
+            isExperimental = true
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {}
+    }
+
+    compileOptions {
+        sourceCompatibility = Versions.java
+        targetCompatibility = Versions.java
+    }
+
+    sourceSets.getByName("main") {
+        java.srcDir("src/main/kotlin")
+    }
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":feature-selectbattleground"))
+    implementation(Deps.androidxAppCompat)
+    implementation(Deps.cicerone)
+    implementation(Deps.koinCore)
+    implementation(Deps.koinScope)
+    implementation(Deps.kotlinStdLib)
+}
+
+//tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class).all {
+//    kotlinOptions {
+//        freeCompilerArgs = freeCompilerArgs + listOf(
+//            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+//            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+//        )
+//    }
+//}
