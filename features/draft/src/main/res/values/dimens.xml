@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="battleground_corner_radius">10dp</dimen>
     <dimen name="battleground_height">100dp</dimen>
-    <dimen name="battleground_title">18sp</dimen>
 </resources>

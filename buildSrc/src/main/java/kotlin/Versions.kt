@@ -5,14 +5,19 @@ object Versions {
     const val kotlin = "1.3.72"
     val java = JavaVersion.VERSION_1_8
     // endregion
-    //Plugins
+    // region Plugins
     const val androidGradlePlugin = "3.6.3"
     const val kotlinGradlePlugin = kotlin
     const val googleServicesPlugin = "4.3.3"
-    //AndroidX
+    // endregion
+    // region AndroidX
     const val androidxAppCompat = "1.1.0"
     const val androidxConstraintLayout = "1.1.3"
     const val androidxCardView = "1.0.0"
+    const val androidxRecyclerView = "1.1.0"
+    // endregion
+    // region Libraries
+    const val adapterDelegates = "4.3.0"
     const val cicerone = "5.1.0"
     const val firebaseAnalytics = "17.4.1"
     const val fragment = "1.2.4"

@@ -6,7 +6,7 @@ buildscript {
     dependencies {
         classpath(Deps.androidGradlePlugin)
         classpath(Deps.kotlinGradlePlugin)
-        classpath(Deps.googleServices)
+        classpath(Deps.googleServicesPlugin)
     }
 }
 allprojects {

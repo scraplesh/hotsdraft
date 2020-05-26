@@ -1,17 +1,13 @@
-//import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
     id("kotlin-android-extensions")
-    id("com.google.gms.google-services")
 }
 
 android {
     compileSdkVersion(AndroidConfig.compileSdkVersion)
 
     defaultConfig {
-        applicationId = AndroidConfig.applicationId
         minSdkVersion(AndroidConfig.minSdkVersion)
         targetSdkVersion(AndroidConfig.targetSdkVersion)
         versionCode = AndroidConfig.versionCode
@@ -25,12 +21,9 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = true
-            isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
-        getByName("debug") {
-            applicationIdSuffix = ".debug"
-        }
+        getByName("debug") {}
     }
 
     compileOptions {
@@ -47,23 +40,10 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
 
-    implementation(project(":feature-draft"))
-    implementation(project(":feature-lot"))
-    implementation(project(":feature-selectbattleground"))
-
+    implementation(Deps.adapterDelegatesKotlinDsl)
     implementation(Deps.androidxAppCompat)
-    implementation(Deps.cicerone)
-    implementation(Deps.firebaseAnalytics)
-    implementation(Deps.koinCore)
+    implementation(Deps.androidxConstraintLayout)
+    implementation(Deps.androidxRecyclerView)
     implementation(Deps.koinScope)
     implementation(Deps.kotlinStdLib)
 }
-
-//tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class).all {
-//    kotlinOptions {
-//        freeCompilerArgs = freeCompilerArgs + listOf(
-//            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-//            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
-//        )
-//    }
-//}

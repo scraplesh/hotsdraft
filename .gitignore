@@ -12,3 +12,5 @@ gradle
 app/staging/
 app/release/
 /*.log
+
+google-services.json
