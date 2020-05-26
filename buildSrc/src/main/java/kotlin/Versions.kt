@@ -15,5 +15,6 @@ object Versions {
     const val androidxCardView = "1.0.0"
     const val cicerone = "5.1.0"
     const val firebaseAnalytics = "17.4.1"
+    const val fragment = "1.2.4"
     const val koin = "2.1.5"
 }

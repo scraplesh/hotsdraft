@@ -33,11 +33,13 @@ android {
 
     sourceSets.getByName("main") {
         java.srcDir("src/main/kotlin")
+        java.srcDir("src/main/kotlinx")
         res.srcDir("src/main/res/drawable/battlegrounds")
     }
 }
 
 dependencies {
     implementation(project(":domain"))
+    implementation(Deps.fragment)
     implementation(Deps.kotlinStdLib)
 }

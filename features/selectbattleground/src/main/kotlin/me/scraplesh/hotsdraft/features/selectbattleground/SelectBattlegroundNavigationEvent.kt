@@ -1,7 +1,6 @@
 package me.scraplesh.hotsdraft.features.selectbattleground
 
+import me.scraplesh.domain.Battleground
 import me.scraplesh.hotsdraft.common.navigation.NavigationEvent
 
-enum class SelectBattlegroundNavigationEvent : NavigationEvent {
-    AlteracPassSelected
-}
+class BattlegroundSelected(val battleground: Battleground) : NavigationEvent

@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":feature-selectbattleground"))
+    implementation(project(":feature-lot"))
     implementation(Deps.androidxAppCompat)
     implementation(Deps.cicerone)
     implementation(Deps.firebaseAnalytics)
