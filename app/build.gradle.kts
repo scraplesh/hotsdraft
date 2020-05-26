@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":feature-draft"))
     implementation(project(":feature-lot"))
     implementation(project(":feature-selectbattleground"))
+    implementation(project(":feature-heroproposal"))
 
     implementation(Deps.androidxAppCompat)
     implementation(Deps.cicerone)

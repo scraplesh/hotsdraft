@@ -43,6 +43,7 @@ dependencies {
     implementation(Deps.adapterDelegatesKotlinDsl)
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxConstraintLayout)
+    implementation(Deps.androidxRecyclerView)
     implementation(Deps.koinScope)
     implementation(Deps.kotlinStdLib)
 }

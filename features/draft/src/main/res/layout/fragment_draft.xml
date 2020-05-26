@@ -1,8 +1,372 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recyclerview_draft"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    />
+    android:padding=""
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/triangle"
+        />
+
+    <!-- Your team -->
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_hero1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
+        tools:src="@drawable/hero_alarak"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_hero2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame2"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame2"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame2"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame2"
+        tools:src="@drawable/hero_abathur"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_hero3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame3"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame3"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame3"
+        tools:src="@drawable/hero_artanis"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_hero4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/hero_nova"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame4"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame4"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame4"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame4"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_hero5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/hero_rehgar"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame5"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame5"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame5"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame5"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_frame1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_your_team_frame2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_frame2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_your_team_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame1"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_frame3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_your_team_frame4"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame2"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_frame4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_your_team_frame5"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame3"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_frame5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame4"
+        />
+
+    <!-- Enemy team -->
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_hero1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame1"
+        tools:src="@drawable/hero_alarak"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_hero2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame2"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame2"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame2"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame2"
+        tools:src="@drawable/hero_abathur"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_hero3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame3"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame3"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame3"
+        tools:src="@drawable/hero_artanis"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_hero4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/hero_nova"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame4"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame4"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame4"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame4"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_hero5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/hero_rehgar"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame5"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame5"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame5"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame5"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_frame1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_enemy_team_frame2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_frame2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_enemy_team_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_enemy_team_frame1"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_frame3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_enemy_team_frame4"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_enemy_team_frame2"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_frame4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toTopOf="@id/imageview_draft_enemy_team_frame5"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_enemy_team_frame3"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_frame5"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
+        app:layout_constraintTop_toBottomOf="@id/imageview_draft_enemy_team_frame4"
+        />
+
+    <!-- Your ban -->
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_hero1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame1"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame1"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame1"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
+        tools:src="@drawable/hero_alarak"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_hero2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame2"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame2"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame2"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame2"
+        tools:src="@drawable/hero_abathur"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_hero3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame3"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame3"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame3"
+        tools:src="@drawable/hero_artanis"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_frame1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_ban_frame2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_frame2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_ban_frame3"
+        app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_ban_frame1"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_your_team_ban_frame3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_ban_frame2"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
+        />
+
+    <!-- Enemy ban -->
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_hero1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame1"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame1"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
+        tools:src="@drawable/hero_alarak"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_hero2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame2"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame2"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame2"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame2"
+        tools:src="@drawable/hero_abathur"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_hero3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame3"
+        app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame3"
+        app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame3"
+        app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame3"
+        tools:src="@drawable/hero_artanis"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_frame1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_ban_frame2"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_frame2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
+        app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_ban_frame3"
+        app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_ban_frame1"
+        />
+
+    <ImageView
+        android:id="@+id/imageview_draft_enemy_team_ban_frame3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/frame_hero"
+        app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_ban_frame2"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
