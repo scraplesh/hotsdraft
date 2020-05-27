@@ -1,4 +1,4 @@
-package me.scraplesh.hotsdraft.common
+package me.scraplesh.domain
 
 /**
  * Compat version of [java.util.function.Consumer]

@@ -10,9 +10,11 @@ object Deps {
     // endregion
     // region AndroidX
     const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
-    const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
     const val androidxCardView = "androidx.cardview:cardview:${Versions.androidxCardView}"
+    const val androidxConstraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.androidxConstraintLayout}"
+    const val androidxCoordinatorLayout = "androidx.coordinatorlayout:coordinatorlayout:${Versions.androidxCoordinatorLayout}"
     const val androidxRecyclerView = "androidx.recyclerview:recyclerview:${Versions.androidxRecyclerView}"
+    const val material = "com.google.android.material:material:${Versions.material}"
     // endregion
     // region Libraries
     const val adapterDelegatesKotlinDsl = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:${Versions.adapterDelegates}"

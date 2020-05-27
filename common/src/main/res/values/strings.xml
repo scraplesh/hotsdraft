@@ -17,4 +17,6 @@
     <string name="warhead_junction">Warhead Junction</string>
     <string name="your_team">Your team</string>
     <string name="enemy_team">Enemy team</string>
+    <string name="roles">Roles:</string>
+    <string name="universes">Universes:</string>
 </resources>

@@ -1,10 +1,7 @@
 package me.scraplesh.domain.draft
 
-import me.scraplesh.domain.draft.Team
-
-enum class DraftOrder(val teamStarts: Team, val actions: List<Pair<Team, DraftAction>>) {
+enum class DraftOrder(val actions: List<Pair<Team, DraftAction>>) {
     YourTeamStarts(
-        Team.Your,
         actions = listOf(
             Team.Your to DraftAction.Ban,
             Team.Enemy to DraftAction.Ban,
@@ -25,7 +22,6 @@ enum class DraftOrder(val teamStarts: Team, val actions: List<Pair<Team, DraftAc
         )
     ),
     EnemyTeamStarts(
-        Team.Enemy,
         actions = listOf(
             Team.Enemy to DraftAction.Ban,
             Team.Your to DraftAction.Ban,

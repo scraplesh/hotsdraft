@@ -1,5 +1,5 @@
 package me.scraplesh.hotsdraft.common.navigation
 
-import me.scraplesh.hotsdraft.common.Consumer
+import me.scraplesh.domain.Consumer
 
 interface Coordinator : Consumer<NavigationEvent>

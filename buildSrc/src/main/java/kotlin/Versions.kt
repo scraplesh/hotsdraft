@@ -12,9 +12,11 @@ object Versions {
     // endregion
     // region AndroidX
     const val androidxAppCompat = "1.1.0"
-    const val androidxConstraintLayout = "1.1.3"
     const val androidxCardView = "1.0.0"
+    const val androidxConstraintLayout = "1.1.3"
+    const val androidxCoordinatorLayout = "1.1.0"
     const val androidxRecyclerView = "1.1.0"
+    const val material = "1.1.0"
     // endregion
     // region Libraries
     const val adapterDelegates = "4.3.0"
