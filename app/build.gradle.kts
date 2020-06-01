@@ -58,6 +58,7 @@ dependencies {
     implementation(Deps.koinCore)
     implementation(Deps.koinScope)
     implementation(Deps.kotlinStdLib)
+    implementation(Deps.material)
 }
 
 //tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class).all {

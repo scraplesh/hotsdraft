@@ -15,6 +15,7 @@
         android:id="@+id/constraintlayout_draft_heroes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/battleground_alterac_pass"
         >
 
         <!-- region Your team ==============================================================================-->
@@ -23,7 +24,7 @@
             android:id="@+id/view_draft_your_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="@color/blue_semitransparent"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
@@ -31,8 +32,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_hero1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
@@ -42,8 +44,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_hero2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame2"
@@ -53,8 +56,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_hero3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame3"
@@ -64,8 +68,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_hero4"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             android:src="@drawable/hero_nova"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame4"
@@ -75,8 +80,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_hero5"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             android:src="@drawable/hero_rehgar"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_frame5"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame5"
@@ -86,9 +92,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_frame1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,9 +104,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_frame2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
@@ -107,9 +115,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_frame3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
@@ -117,9 +126,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_frame4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_frame5"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
@@ -127,9 +137,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_frame5"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
@@ -141,8 +152,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_hero1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame1"
@@ -152,8 +164,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_hero2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame2"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame2"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame2"
@@ -163,8 +176,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_hero3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_your_team_ban_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame3"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame3"
@@ -174,32 +188,34 @@
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_frame1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
-            app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_ban_frame2"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame2"
+            app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame2"
             />
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_frame2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
-            app:layout_constraintEnd_toStartOf="@id/imageview_draft_your_team_ban_frame3"
-            app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_ban_frame1"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame3"
+            app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
             />
 
         <ImageView
             android:id="@+id/imageview_draft_your_team_ban_frame3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame4"
-            app:layout_constraintStart_toEndOf="@id/imageview_draft_your_team_ban_frame2"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
             />
 
@@ -211,7 +227,7 @@
             android:id="@+id/view_draft_enemy_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@android:color/holo_red_light"
+            android:background="@color/red_semitransparent"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
@@ -219,8 +235,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_hero1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame1"
@@ -230,8 +247,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_hero2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame2"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame2"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame2"
@@ -241,8 +259,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_hero3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame3"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame3"
@@ -252,9 +271,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_hero4"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/hero_nova"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            tools:src="@drawable/hero_nova"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame4"
@@ -263,9 +283,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_hero5"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/hero_rehgar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            tools:src="@drawable/hero_rehgar"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame5"
@@ -274,9 +295,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_frame1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_frame2"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -285,9 +307,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_frame2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_frame3"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_frame1"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame1"
@@ -295,9 +318,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_frame3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_frame2"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame1"
@@ -305,9 +329,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_frame4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_frame3"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame1"
@@ -315,9 +340,10 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_frame5"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame1"
@@ -329,8 +355,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_hero1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame1"
@@ -340,8 +367,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_hero2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame2"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame2"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame2"
@@ -351,8 +379,9 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_hero3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_ban_frame3"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_ban_frame3"
@@ -362,33 +391,35 @@
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_frame1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
-            app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_ban_frame2"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame1"
+            app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_ban_frame1"
             />
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_frame2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
-            app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
-            app:layout_constraintEnd_toStartOf="@id/imageview_draft_enemy_team_ban_frame3"
-            app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_ban_frame1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame2"
+            app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame2"
+            app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
             />
 
         <ImageView
             android:id="@+id/imageview_draft_enemy_team_ban_frame3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:src="@drawable/frame_hero"
-            app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_ban_frame1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame3"
-            app:layout_constraintStart_toEndOf="@id/imageview_draft_enemy_team_ban_frame2"
+            app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
             />
 
         <!-- endregion -->
@@ -399,10 +430,11 @@
         android:id="@+id/constraintlayout_draft_hero_proposals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:behavior_hideable="false"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        tools:minHeight="412dp"
-        tools:behavior_peekHeight="412dp"
+        tools:behavior_peekHeight="405dp"
+        tools:minHeight="405dp"
         >
 
         <!-- region Roles ================================================================================-->
@@ -559,6 +591,21 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:hideOnScroll="true"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bar"
+        /-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
