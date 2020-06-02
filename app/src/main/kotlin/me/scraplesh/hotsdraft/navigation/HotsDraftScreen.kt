@@ -1,6 +1,8 @@
 package me.scraplesh.hotsdraft.navigation
 
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import me.scraplesh.domain.Battleground
 import me.scraplesh.domain.draft.Team
 import me.scraplesh.hotsdraft.features.draft.DraftFragment
@@ -17,6 +19,8 @@ sealed class HotsDraftScreen : SupportAppScreen() {
     override fun getFragment(): Fragment? = LotFragment.newInstance(battleground)
   }
 
+  @ExperimentalCoroutinesApi
+  @InternalCoroutinesApi
   class Draft(private val battleground: Battleground, private val team: Team) : HotsDraftScreen() {
       override fun getFragment(): Fragment? = DraftFragment.newInstance(battleground, team)
   }

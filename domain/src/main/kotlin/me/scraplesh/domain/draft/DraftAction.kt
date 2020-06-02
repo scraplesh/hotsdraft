@@ -1,3 +1,6 @@
 package me.scraplesh.domain.draft
 
-enum class DraftAction { Ban, Pick }
+sealed class DraftAction {
+  class Ban(val banPosition: BanPosition) : DraftAction()
+  class Pick(val player: Player) : DraftAction()
+}

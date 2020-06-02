@@ -1,11 +1,15 @@
 package me.scraplesh.hotsdraft.navigation
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 import me.scraplesh.hotsdraft.common.navigation.Coordinator
 import me.scraplesh.hotsdraft.common.navigation.NavigationEvent
 import me.scraplesh.hotsdraft.features.lot.FirstTeamSelectedNavigationEvent
 import me.scraplesh.hotsdraft.features.selectbattleground.BattlegroundSelected
 import ru.terrakok.cicerone.Router
 
+@ExperimentalCoroutinesApi
+@InternalCoroutinesApi
 class RootCoordinator(private val router: Router) : Coordinator {
   override fun accept(t: NavigationEvent) {
     when (t) {

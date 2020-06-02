@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("kotlin-android-extensions")
 }
 
 android {
@@ -12,10 +11,6 @@ android {
         targetSdkVersion(AndroidConfig.targetSdkVersion)
         versionCode = AndroidConfig.versionCode
         versionName = AndroidConfig.versionName
-
-        androidExtensions {
-            isExperimental = true
-        }
     }
 
     buildTypes {
@@ -34,6 +29,10 @@ android {
     sourceSets.getByName("main") {
         java.srcDir("src/main/kotlin")
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -44,7 +43,13 @@ dependencies {
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxConstraintLayout)
     implementation(Deps.androidxCoordinatorLayout)
+    implementation(Deps.androidxLifecycleRuntimeKtx)
+    implementation(Deps.androidxLifecycleViewModelKtx)
+    implementation(Deps.androidxRecyclerView)
+    implementation(Deps.coroutinesCore)
+    implementation(Deps.coroutinesAndroid)
     implementation(Deps.koinScope)
+    implementation(Deps.koinViewModel)
     implementation(Deps.kotlinStdLib)
     implementation(Deps.material)
 }

@@ -4,24 +4,24 @@ import me.scraplesh.domain.Battleground
 import me.scraplesh.domain.Consumer
 import me.scraplesh.domain.Hero
 
-class Draft(teamFirst: Team, val battleground: Battleground) : Consumer<Hero> {
+class Draft(val battleground: Battleground, teamStarts: Team) : Consumer<Hero> {
   val team get() = actions.firstOrNull()?.first
   val action get() = actions.firstOrNull()?.second
   val yourTeamBanned: List<Hero>
-    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Your && action == DraftAction.Ban }
+    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Your && action is DraftAction.Ban }
       .map { (_, _, hero) -> hero }
   val yourTeamPicked: List<Hero>
-    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Your && action == DraftAction.Pick }
+    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Your && action is DraftAction.Pick }
       .map { (_, _, hero) -> hero }
   val enemyTeamBanned: List<Hero>
-    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Enemy && action == DraftAction.Ban }
+    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Enemy && action is DraftAction.Ban }
       .map { (_, _, hero) -> hero }
   val enemyTeamPicked: List<Hero>
-    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Enemy && action == DraftAction.Pick }
+    get() = draftedHeroes.filter { (team, action, _) -> team == Team.Enemy && action is DraftAction.Pick }
       .map { (_, _, hero) -> hero }
 
   private val draftedHeroes: List<Triple<Team, DraftAction, Hero>> = mutableListOf()
-  private var actions = when (teamFirst) {
+  private var actions = when (teamStarts) {
     Team.Your -> DraftOrder.YourTeamStarts
     Team.Enemy -> DraftOrder.EnemyTeamStarts
   }.actions

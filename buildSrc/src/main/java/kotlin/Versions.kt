@@ -10,11 +10,15 @@ object Versions {
     const val kotlinGradlePlugin = kotlin
     const val googleServicesPlugin = "4.3.3"
     // endregion
-    // region AndroidX
+    // region JetBrains
+    const val coroutines = "1.3.7"
+    // endregion
+    // region Android
     const val androidxAppCompat = "1.1.0"
     const val androidxCardView = "1.0.0"
     const val androidxConstraintLayout = "1.1.3"
     const val androidxCoordinatorLayout = "1.1.0"
+    const val androidxLifecycle = "2.2.0"
     const val androidxRecyclerView = "1.1.0"
     const val material = "1.1.0"
     // endregion

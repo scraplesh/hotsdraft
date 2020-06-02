@@ -50,13 +50,14 @@ dependencies {
     implementation(project(":feature-draft"))
     implementation(project(":feature-lot"))
     implementation(project(":feature-selectbattleground"))
-    implementation(project(":feature-heroproposal"))
 
     implementation(Deps.androidxAppCompat)
     implementation(Deps.cicerone)
+    implementation(Deps.coroutinesCore)
     implementation(Deps.firebaseAnalytics)
     implementation(Deps.koinCore)
     implementation(Deps.koinScope)
+    implementation(Deps.koinViewModel)
     implementation(Deps.kotlinStdLib)
     implementation(Deps.material)
 }
