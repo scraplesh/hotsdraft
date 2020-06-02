@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.draft.Draft
+import me.scraplesh.domain.draft.DraftOrder
 import me.scraplesh.domain.draft.Team
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.android.viewmodel.scope.getViewModel
@@ -18,9 +18,16 @@ import org.koin.dsl.module
 @InternalCoroutinesApi
 val draftModule = module {
   scope<DraftFragment> {
-    scoped { (battleground: Battleground, teamStarts: Team) -> Draft(battleground, teamStarts) }
     viewModel { (battleground: Battleground, teamStarts: Team) ->
-      DraftViewModel(DraftViewModel.State(draft = get { parametersOf(battleground, teamStarts) }))
+      DraftViewModel(
+        DraftViewModel.State(
+          battleground = battleground,
+          actions = when (teamStarts) {
+            Team.Your -> DraftOrder.YourTeamStarts
+            Team.Enemy -> DraftOrder.EnemyTeamStarts
+          }.actions
+        )
+      )
     }
     scoped<AndroidBindings<DraftView>> { (
                                            owner: ViewModelStoreOwner,
