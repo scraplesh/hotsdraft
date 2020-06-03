@@ -147,6 +147,8 @@ class DraftViewModel(initialState: State) :
     class TankChecked(val filteredHeroes: List<Hero>) : Effect()
     class HeroSelected(
       val draftedHeroes: List<Triple<Team, DraftAction, Hero>>,
+      val proposedHeroes: List<Hero>,
+      val filteredHeroes: List<Hero>,
       val actions: List<Pair<Team, DraftAction>>
     ) : Effect()
   }
@@ -166,6 +168,8 @@ class DraftViewModel(initialState: State) :
         flowOf(
           Effect.HeroSelected(
             draftedHeroes = state.draftedHeroes + Triple(team, action, hero),
+            proposedHeroes = state.proposedHeroes.filter { it != hero },
+            filteredHeroes = state.filteredHeroes.filter { it != hero },
             actions = state.actions.drop(1)
           )
         )
@@ -311,6 +315,8 @@ class DraftViewModel(initialState: State) :
   private fun reduce(state: State, effect: Effect): State = when (effect) {
     is Effect.HeroSelected -> state.copy(
       draftedHeroes = effect.draftedHeroes,
+      proposedHeroes = effect.proposedHeroes,
+      filteredHeroes = effect.filteredHeroes,
       actions = effect.actions
     )
     is Effect.AllUniversesChecked -> state.copy(
