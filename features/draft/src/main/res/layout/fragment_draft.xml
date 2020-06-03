@@ -190,10 +190,10 @@
             android:id="@+id/imageview_draft_your_team_ban_frame1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
-            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame2"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame2"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame2"
             app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_frame2"
             />
 
@@ -201,10 +201,10 @@
             android:id="@+id/imageview_draft_your_team_ban_frame2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
-            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame3"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame3"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame3"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
             />
 
@@ -212,8 +212,8 @@
             android:id="@+id/imageview_draft_your_team_ban_frame3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
             android:src="@drawable/frame_hero"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame4"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_ban_frame1"
@@ -274,11 +274,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="8dp"
-            tools:src="@drawable/hero_nova"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame4"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame4"
+            tools:src="@drawable/hero_nova"
             />
 
         <ImageView
@@ -286,11 +286,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="8dp"
-            tools:src="@drawable/hero_rehgar"
             app:layout_constraintBottom_toBottomOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_enemy_team_frame5"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_frame5"
+            tools:src="@drawable/hero_rehgar"
             />
 
         <ImageView
@@ -395,8 +395,8 @@
             android:layout_height="0dp"
             android:src="@drawable/frame_hero"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame1"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame1"
             app:layout_constraintTop_toBottomOf="@id/imageview_draft_your_team_ban_frame1"
             />
 
@@ -406,8 +406,8 @@
             android:layout_height="0dp"
             android:src="@drawable/frame_hero"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame2"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame2"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame2"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
             />
 
@@ -417,8 +417,8 @@
             android:layout_height="0dp"
             android:src="@drawable/frame_hero"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame3"
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_ban_frame3"
+            app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_ban_frame3"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_enemy_team_ban_frame1"
             />
 
@@ -439,145 +439,128 @@
 
         <!-- region Roles ================================================================================-->
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_all_roles"
+        <RadioGroup
+            android:id="@+id/radiogroup_draft_roles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:button="@drawable/ic_nine_squares_selector"
-            android:checked="true"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_tanks"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            >
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_tanks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_tank_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_bruisers"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_all_roles"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_all_roles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_nine_squares_selector"
+                android:checked="true"
+                />
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_bruisers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_bruiser_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_supports"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_tanks"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_tanks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_tank_selector"
+                />
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_supports"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_support_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_healers"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_bruisers"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_bruisers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_bruiser_selector"
+                />
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_healers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_healer_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_melee_assassins"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_supports"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_supports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_support_selector"
+                />
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_melee_assassins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_melee_assassin_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_ranged_assassins"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_healers"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_healers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_healer_selector"
+                />
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_ranged_assassins"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_role_ranged_assassin_selector"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_melee_assassins"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_roles"
-            />
+            <RadioButton
+                android:id="@+id/radiobutton_draft_melee_assassins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_melee_assassin_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_ranged_assassins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_role_ranged_assassin_selector"
+                />
+
+        </RadioGroup>
 
         <!-- endregion -->
 
         <!-- region Universes ================================================================================-->
 
-        <CheckBox
-            android:id="@+id/checkbox_draft_all_universes"
+        <RadioGroup
+            android:id="@+id/radiogroup_draft_universes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:button="@drawable/ic_nine_squares_selector"
-            android:checked="true"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_warcraft"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_draft_all_roles"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox_draft_warcraft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_universe_warcraft_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_starcraft"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_all_universes"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_universes"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox_draft_starcraft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_universe_starcraft_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_diablo"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_warcraft"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_universes"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox_draft_diablo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_universe_diablo_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_overwatch"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_starcraft"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_universes"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox_draft_overwatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_universe_overwatch_selector"
-            app:layout_constraintEnd_toStartOf="@id/checkbox_draft_nexus"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_diablo"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_universes"
-            />
-
-        <CheckBox
-            android:id="@+id/checkbox_draft_nexus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/ic_universe_nexus_selector"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/checkbox_draft_overwatch"
-            app:layout_constraintTop_toTopOf="@id/checkbox_draft_all_universes"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiogroup_draft_roles"
+            >
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_all_universes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_nine_squares_selector"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_warcraft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_universe_warcraft_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_starcraft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_universe_starcraft_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_diablo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_universe_diablo_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_overwatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_universe_overwatch_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/radiobutton_draft_nexus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/ic_universe_nexus_selector"
+                />
+
+        </RadioGroup>
 
         <!-- endregion -->
 
@@ -587,7 +570,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkbox_draft_nexus"
+            app:layout_constraintTop_toBottomOf="@id/radiogroup_draft_universes"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

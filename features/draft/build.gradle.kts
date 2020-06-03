@@ -48,6 +48,7 @@ dependencies {
     implementation(Deps.androidxRecyclerView)
     implementation(Deps.coroutinesCore)
     implementation(Deps.coroutinesAndroid)
+    implementation(Deps.flowBinding)
     implementation(Deps.koinScope)
     implementation(Deps.koinViewModel)
     implementation(Deps.kotlinStdLib)

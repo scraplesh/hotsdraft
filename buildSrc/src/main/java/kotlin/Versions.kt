@@ -27,5 +27,6 @@ object Versions {
     const val cicerone = "5.1.0"
     const val firebaseAnalytics = "17.4.1"
     const val fragment = "1.2.4"
+    const val flowBinding = "0.12.0"
     const val koin = "2.1.5"
 }

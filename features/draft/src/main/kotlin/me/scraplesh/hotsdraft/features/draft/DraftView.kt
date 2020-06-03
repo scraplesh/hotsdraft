@@ -2,7 +2,7 @@ package me.scraplesh.hotsdraft.features.draft
 
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.CheckBox
+import android.widget.RadioButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -16,9 +16,13 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import me.scraplesh.domain.Battleground
 import me.scraplesh.domain.Hero
-import me.scraplesh.domain.Role
-import me.scraplesh.domain.Universe
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
+import reactivecircus.flowbinding.android.widget.checkedChanges
+
+infix fun <T> List<T>.equalTo(other: List<T>): Boolean =
+  size == other.size &&
+      mapIndexed { index: Int, item: T -> item == other[index] }
+        .all { it }
 
 @FlowPreview
 @InternalCoroutinesApi
@@ -29,8 +33,19 @@ class DraftView(private val coroutineScope: CoroutineScope) :
 
   class ViewModel(
     val battleground: Battleground,
-    val selectedUniverse: Universe?,
-    val selectedRole: Role?,
+    val allUniversesChecked: Boolean,
+    val diabloChecked: Boolean,
+    val nexusChecked: Boolean,
+    val overwatchChecked: Boolean,
+    val starcraftChecked: Boolean,
+    val warcraftChecked: Boolean,
+    val allRolesChecked: Boolean,
+    val bruiserChecked: Boolean,
+    val healerChecked: Boolean,
+    val meleeAssassinChecked: Boolean,
+    val rangedAssassinChecked: Boolean,
+    val supportChecked: Boolean,
+    val tankChecked: Boolean,
     val heroes: List<Hero>,
     val yourPick1: Hero?,
     val yourPick2: Hero?,
@@ -52,15 +67,27 @@ class DraftView(private val coroutineScope: CoroutineScope) :
 
   sealed class UiEvent {
     class HeroSelected(val hero: Hero) : UiEvent()
+    object AllUniversesChecked : UiEvent()
+    object DiabloChecked : UiEvent()
+    object NexusChecked : UiEvent()
+    object OverwatchChecked : UiEvent()
+    object StarcraftChecked : UiEvent()
+    object WarcraftChecked : UiEvent()
+    object AllRolesChecked : UiEvent()
+    object BruiserChecked : UiEvent()
+    object HealerChecked : UiEvent()
+    object MeleeAssassinChecked : UiEvent()
+    object RangedAssassinChecked : UiEvent()
+    object SupportChecked : UiEvent()
+    object TankChecked : UiEvent()
   }
 
   private val viewModelsChannel = ConflatedBroadcastChannel<ViewModel>()
   private val uiEvents = ConflatedBroadcastChannel<UiEvent>()
-
-  private val viewModels get() = viewModelsChannel.asFlow()
+  private val viewModels = viewModelsChannel.asFlow()
 
   private var heroProposalsList by didSet<RecyclerView> {
-    layoutManager = GridLayoutManager(context, 4)
+    layoutManager = GridLayoutManager(context, 5)
     adapter = ListDelegationAdapter(
       heroAdapterDelegate { hero ->
         coroutineScope.launch {
@@ -69,249 +96,272 @@ class DraftView(private val coroutineScope: CoroutineScope) :
       }
     )
       .apply {
-        coroutineScope.launch {
-          viewModels.map { it.heroes }
-            .distinctUntilChanged { old, new ->
-              old.size == new.size &&
-                  old.mapIndexed { index: Int, hero: Hero -> hero == new[index] }
-                    .all { it }
-            }
-            .collect { heroes -> items = heroes.map { Item.HeroItem(it) } }
-        }
+        viewModels.map { it.heroes }
+          .distinctUntilChanged { old, new -> old equalTo new }
+          .onEach { heroes ->
+            items = heroes.map { Item.HeroItem(it) }
+            notifyDataSetChanged()
+          }
+          .launchIn(coroutineScope)
       }
   }
+
   private var yourPick1View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourPick1 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourPick1 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourPick2View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourPick2 }
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourPick2 }
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourPick3View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourPick3 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourPick3 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourPick4View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourPick4 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourPick4 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourPick5View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourPick5 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourPick5 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourBan1View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourBan1 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourBan1 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourBan2View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourBan2 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourBan2 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var yourBan3View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.yourBan3 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.yourBan3 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyPick1View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyPick1 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyPick1 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyPick2View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyPick2 }
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyPick2 }
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyPick3View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyPick3 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyPick3 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyPick4View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyPick4 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyPick4 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyPick5View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyPick5 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyPick5 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyBan1View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyBan1 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyBan1 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
+
   private var enemyBan2View by didSet<ImageView> {
     coroutineScope.launch {
       viewModels.map { it.enemyBan2 }
         .distinctUntilChanged()
-        .collect { hero ->
+        .onEach { hero ->
           setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
         }
+        .launchIn(coroutineScope)
     }
   }
   private var enemyBan3View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyBan3 }
-        .distinctUntilChanged()
-        .collect { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-    }
+    viewModels.map { it.enemyBan3 }
+      .distinctUntilChanged()
+      .onEach { hero ->
+        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+      }
+      .launchIn(coroutineScope)
   }
-  private var allUniversesCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == null }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var allUniversesRadioButton by didSet<RadioButton> {
+    viewModels.map { it.allUniversesChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.AllUniversesChecked) }
+      .launchIn(coroutineScope)
   }
-  private var diabloCheckBox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == Universe.Diablo }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var diabloCheckBox by didSet<RadioButton> {
+    viewModels.map { it.diabloChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.DiabloChecked) }
+      .launchIn(coroutineScope)
   }
-  private var nexusCheckBox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == Universe.Nexus }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var nexusCheckBox by didSet<RadioButton> {
+    viewModels.map { it.nexusChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.NexusChecked) }
+      .launchIn(coroutineScope)
   }
-  private var overwatchCheckBox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == Universe.Overwatch }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var overwatchCheckBox by didSet<RadioButton> {
+    viewModels.map { it.overwatchChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.OverwatchChecked) }
+      .launchIn(coroutineScope)
   }
-  private var starcraftCheckBox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == Universe.Starcraft }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var starcraftCheckBox by didSet<RadioButton> {
+    viewModels.map { it.starcraftChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.StarcraftChecked) }
+      .launchIn(coroutineScope)
   }
-  private var warcraftCheckBox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedUniverse == Universe.Warcraft }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var warcraftCheckBox by didSet<RadioButton> {
+    viewModels.map { it.warcraftChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.WarcraftChecked) }
+      .launchIn(coroutineScope)
   }
-  private var allRolesCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == null }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var allRolesRadioButton by didSet<RadioButton> {
+    viewModels.map { it.allRolesChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.AllRolesChecked) }
+      .launchIn(coroutineScope)
   }
-  private var bruiserCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.Bruiser }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var bruiserRadioButton by didSet<RadioButton> {
+    viewModels.map { it.bruiserChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.BruiserChecked) }
+      .launchIn(coroutineScope)
   }
-  private var healerCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.Healer }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var healerRadioButton by didSet<RadioButton> {
+    viewModels.map { it.healerChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.HealerChecked) }
+      .launchIn(coroutineScope)
   }
-  private var meleeAssassinCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.MeleeAssassin }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var meleeAssassinRadioButton by didSet<RadioButton> {
+    viewModels.map { it.meleeAssassinChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.MeleeAssassinChecked) }
+      .launchIn(coroutineScope)
   }
-  private var rangedAssassinCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.RangedAssassin }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var rangedAssassinRadioButton by didSet<RadioButton> {
+    viewModels.map { it.rangedAssassinChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.RangedAssassinChecked) }
+      .launchIn(coroutineScope)
   }
-  private var supportCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.Support }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var supportRadioButton by didSet<RadioButton> {
+    viewModels.map { it.supportChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.SupportChecked) }
+      .launchIn(coroutineScope)
   }
-  private var tankCheckbox by didSet<CheckBox> {
-    coroutineScope.launch {
-      viewModels.map { it.selectedRole == Role.Tank }
-        .distinctUntilChanged()
-        .collect(setChecked())
-    }
+  private var tankRadioButton by didSet<RadioButton> {
+    viewModels.map { it.tankChecked }
+      .distinctUntilChanged()
+      .onEach { isChecked = it }
+      .launchIn(coroutineScope)
+
+    checkedChanges().filter { it }
+      .onEach { uiEvents.send(UiEvent.TankChecked) }
+      .launchIn(coroutineScope)
   }
   private var battlegroundView by didSet<View> {
     coroutineScope.launch {
@@ -360,19 +410,19 @@ class DraftView(private val coroutineScope: CoroutineScope) :
     enemyBan1View = imageviewDraftEnemyTeamBanHero1
     enemyBan2View = imageviewDraftEnemyTeamBanHero2
     enemyBan3View = imageviewDraftEnemyTeamBanHero3
-    allUniversesCheckbox = checkboxDraftAllUniverses
-    diabloCheckBox = checkboxDraftDiablo
-    nexusCheckBox = checkboxDraftNexus
-    overwatchCheckBox = checkboxDraftOverwatch
-    starcraftCheckBox = checkboxDraftStarcraft
-    warcraftCheckBox = checkboxDraftWarcraft
-    allRolesCheckbox = checkboxDraftAllRoles
-    bruiserCheckbox = checkboxDraftBruisers
-    healerCheckbox = checkboxDraftHealers
-    meleeAssassinCheckbox = checkboxDraftMeleeAssassins
-    rangedAssassinCheckbox = checkboxDraftRangedAssassins
-    supportCheckbox = checkboxDraftSupports
-    tankCheckbox = checkboxDraftTanks
+    allUniversesRadioButton = radiobuttonDraftAllUniverses
+    diabloCheckBox = radiobuttonDraftDiablo
+    nexusCheckBox = radiobuttonDraftNexus
+    overwatchCheckBox = radiobuttonDraftOverwatch
+    starcraftCheckBox = radiobuttonDraftStarcraft
+    warcraftCheckBox = radiobuttonDraftWarcraft
+    allRolesRadioButton = radiobuttonDraftAllRoles
+    bruiserRadioButton = radiobuttonDraftBruisers
+    healerRadioButton = radiobuttonDraftHealers
+    meleeAssassinRadioButton = radiobuttonDraftMeleeAssassins
+    rangedAssassinRadioButton = radiobuttonDraftRangedAssassins
+    supportRadioButton = radiobuttonDraftSupports
+    tankRadioButton = radiobuttonDraftTanks
 
     setupHeroProposalsView(root, constraintlayoutDraftHeroProposals, constraintlayoutDraftHeroes)
   }.root
@@ -403,12 +453,6 @@ class DraftView(private val coroutineScope: CoroutineScope) :
         heroImage.setImageResource(item.hero.drawableId)
       }
     }
-
-  private fun CheckBox.setChecked() = object : FlowCollector<Boolean> {
-    override suspend fun emit(value: Boolean) {
-      isChecked = value
-    }
-  }
 
   private val Hero.drawableId
     get() = when (this) {

@@ -27,6 +27,7 @@ object Deps {
     const val cicerone = "ru.terrakok.cicerone:cicerone:${Versions.cicerone}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}"
     const val fragment = "androidx.fragment:fragment:${Versions.fragment}"
+    const val flowBinding = "io.github.reactivecircus.flowbinding:flowbinding-android:${Versions.flowBinding}"
     const val koinCore = "org.koin:koin-core:${Versions.koin}"
     const val koinScope = "org.koin:koin-androidx-scope:${Versions.koin}"
     const val koinViewModel = "org.koin:koin-android-viewmodel:${Versions.koin}"

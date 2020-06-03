@@ -4,6 +4,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
+import me.scraplesh.domain.Role
+import me.scraplesh.domain.Universe
+import me.scraplesh.hotsdraft.features.draft.DraftView.UiEvent
+import me.scraplesh.hotsdraft.features.draft.DraftViewModel.Wish
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -14,15 +18,39 @@ class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: Draft
   override fun setup(view: DraftView) {
     bind(view to viewModel using { uiEvent ->
       when (uiEvent) {
-        is DraftView.UiEvent.HeroSelected -> DraftViewModel.Wish.SelectHero(uiEvent.hero)
+        is UiEvent.HeroSelected -> Wish.SelectHero(uiEvent.hero)
+        UiEvent.AllUniversesChecked -> Wish.CheckAllUniverses
+        UiEvent.DiabloChecked -> Wish.CheckDiablo
+        UiEvent.NexusChecked -> Wish.CheckNexus
+        UiEvent.OverwatchChecked -> Wish.CheckOverwatch
+        UiEvent.StarcraftChecked -> Wish.CheckStarcraft
+        UiEvent.WarcraftChecked -> Wish.CheckWarcraft
+        UiEvent.AllRolesChecked -> Wish.CheckAllRoles
+        UiEvent.BruiserChecked -> Wish.CheckBruiser
+        UiEvent.HealerChecked -> Wish.CheckHealer
+        UiEvent.MeleeAssassinChecked -> Wish.CheckMeleeAssassin
+        UiEvent.RangedAssassinChecked -> Wish.CheckRangedAssassin
+        UiEvent.SupportChecked -> Wish.CheckSupport
+        UiEvent.TankChecked -> Wish.CheckTank
       }
     })
     bind(viewModel to view using { state ->
       DraftView.ViewModel(
         battleground = state.battleground,
-        selectedUniverse = state.selectedUniverse,
-        selectedRole = state.selectedRole,
-        heroes = state.heroes,
+        heroes = state.filteredHeroes,
+        allUniversesChecked = state.selectedUniverse == null,
+        diabloChecked = state.selectedUniverse == Universe.Diablo,
+        nexusChecked = state.selectedUniverse == Universe.Nexus,
+        overwatchChecked = state.selectedUniverse == Universe.Overwatch,
+        starcraftChecked = state.selectedUniverse == Universe.Starcraft,
+        warcraftChecked = state.selectedUniverse == Universe.Warcraft,
+        allRolesChecked = state.selectedRole == null,
+        bruiserChecked = state.selectedRole == Role.Bruiser,
+        healerChecked = state.selectedRole == Role.Healer,
+        meleeAssassinChecked = state.selectedRole == Role.MeleeAssassin,
+        rangedAssassinChecked = state.selectedRole == Role.RangedAssassin,
+        supportChecked = state.selectedRole == Role.Support,
+        tankChecked = state.selectedRole == Role.Tank,
         yourPick1 = state.yourPick1,
         yourPick2 = state.yourPick2,
         yourPick3 = state.yourPick3,

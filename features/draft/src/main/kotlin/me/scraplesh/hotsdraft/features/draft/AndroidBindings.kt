@@ -2,10 +2,7 @@ package me.scraplesh.hotsdraft.features.draft
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @InternalCoroutinesApi
@@ -17,6 +14,7 @@ abstract class AndroidBindings<T>(private val coroutineScope: CoroutineScope) {
     coroutineScope.launch {
       flow.map { value -> transformer(value) }
         .filterNotNull()
+        .catch {  }
         .collect(collector)
     }
   }

@@ -39,6 +39,19 @@ class DraftViewModel(initialState: State) :
 
   sealed class Wish {
     class SelectHero(val hero: Hero) : Wish()
+    object CheckAllUniverses : Wish()
+    object CheckDiablo : Wish()
+    object CheckNexus : Wish()
+    object CheckOverwatch : Wish()
+    object CheckStarcraft : Wish()
+    object CheckWarcraft : Wish()
+    object CheckAllRoles : Wish()
+    object CheckBruiser : Wish()
+    object CheckHealer : Wish()
+    object CheckMeleeAssassin : Wish()
+    object CheckRangedAssassin : Wish()
+    object CheckSupport : Wish()
+    object CheckTank : Wish()
   }
 
   data class State(
@@ -47,7 +60,8 @@ class DraftViewModel(initialState: State) :
     val draftedHeroes: List<Triple<Team, DraftAction, Hero>> = emptyList(),
     val selectedUniverse: Universe? = null,
     val selectedRole: Role? = null,
-    val heroes: List<Hero> = Hero.values().asList()
+    val proposedHeroes: List<Hero> = Hero.values().asList(),
+    val filteredHeroes: List<Hero> = proposedHeroes
   ) {
     val currentAction get() = actions.firstOrNull()
 
@@ -118,8 +132,23 @@ class DraftViewModel(initialState: State) :
   }
 
   sealed class Effect {
-    object NoEffect : Effect()
-    class HeroSelected(val team: Team, val action: DraftAction, val hero: Hero) : Effect()
+    class AllUniversesChecked(val filteredHeroes: List<Hero>) : Effect()
+    class DiabloChecked(val filteredHeroes: List<Hero>) : Effect()
+    class NexusChecked(val filteredHeroes: List<Hero>) : Effect()
+    class OverwatchChecked(val filteredHeroes: List<Hero>) : Effect()
+    class StarcraftChecked(val filteredHeroes: List<Hero>) : Effect()
+    class WarcraftChecked(val filteredHeroes: List<Hero>) : Effect()
+    class AllRolesChecked(val filteredHeroes: List<Hero>) : Effect()
+    class BruiserChecked(val filteredHeroes: List<Hero>) : Effect()
+    class HealerChecked(val filteredHeroes: List<Hero>) : Effect()
+    class MeleeAssassinChecked(val filteredHeroes: List<Hero>) : Effect()
+    class RangedAssassinChecked(val filteredHeroes: List<Hero>) : Effect()
+    class SupportChecked(val filteredHeroes: List<Hero>) : Effect()
+    class TankChecked(val filteredHeroes: List<Hero>) : Effect()
+    class HeroSelected(
+      val draftedHeroes: List<Triple<Team, DraftAction, Hero>>,
+      val actions: List<Pair<Team, DraftAction>>
+    ) : Effect()
   }
 
   override suspend fun collect(collector: FlowCollector<State>) {
@@ -132,25 +161,209 @@ class DraftViewModel(initialState: State) :
   }
 
   private fun act(wish: Wish, state: State): Flow<Effect> {
-    fun selectHero(hero: Hero, currentAction: Pair<Team, DraftAction>?): Flow<Effect> {
-      return flowOf(
-        currentAction?.let { (team, action) ->
-          Effect.HeroSelected(team, action, hero)
+    fun selectHero(hero: Hero, currentAction: Pair<Team, DraftAction>?): Flow<Effect> =
+      currentAction?.let { (team, action) ->
+        flowOf(
+          Effect.HeroSelected(
+            draftedHeroes = state.draftedHeroes + Triple(team, action, hero),
+            actions = state.actions.drop(1)
+          )
+        )
+      }
+        ?: emptyFlow()
+
+    fun checkAllUniverses(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.AllUniversesChecked(
+        proposedHeroes.filter { hero ->
+          selectedRole?.let { hero.role == selectedRole } ?: true
         }
-          ?: Effect.NoEffect
       )
-    }
+    )
+    fun checkDiablo(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.DiabloChecked(proposedHeroes.filter { hero ->
+        hero.universe == Universe.Diablo &&
+            selectedRole?.let { hero.role == selectedRole } ?: true
+      })
+    )
+    fun checkNexus(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.NexusChecked(proposedHeroes.filter { hero ->
+        hero.universe == Universe.Nexus &&
+            selectedRole?.let { hero.role == selectedRole } ?: true
+      })
+    )
+    fun checkOverwatch(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.OverwatchChecked(proposedHeroes.filter { hero ->
+        hero.universe == Universe.Overwatch &&
+            selectedRole?.let { hero.role == selectedRole } ?: true
+      })
+    )
+    fun checkStarcraft(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.StarcraftChecked(proposedHeroes.filter { hero ->
+        hero.universe == Universe.Starcraft &&
+            selectedRole?.let { hero.role == selectedRole } ?: true
+      })
+    )
+    fun checkWarcraft(
+      proposedHeroes: List<Hero>,
+      selectedRole: Role?
+    ): Flow<Effect> = flowOf(
+      Effect.WarcraftChecked(proposedHeroes.filter { hero ->
+        hero.universe == Universe.Warcraft &&
+            selectedRole?.let { hero.role == selectedRole } ?: true
+      })
+    )
+    fun checkAllRoles(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.AllRolesChecked(proposedHeroes.filter { hero ->
+        selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkBruiser(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.BruiserChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.Bruiser &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkHealer(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.HealerChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.Healer &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkMeleeAssassin(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.MeleeAssassinChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.MeleeAssassin &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkRangedAssassin(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.RangedAssassinChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.RangedAssassin &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkSupport(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.SupportChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.Support &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
+    fun checkTank(
+      proposedHeroes: List<Hero>,
+      selectedUniverse: Universe?
+    ): Flow<Effect> = flowOf(
+      Effect.TankChecked(proposedHeroes.filter { hero ->
+        hero.role == Role.Tank &&
+            selectedUniverse?.let { hero.universe == selectedUniverse } ?: true
+      })
+    )
 
     return when (wish) {
       is Wish.SelectHero -> selectHero(wish.hero, state.currentAction)
+      Wish.CheckAllUniverses -> checkAllUniverses(state.proposedHeroes, state.selectedRole)
+      Wish.CheckDiablo -> checkDiablo(state.proposedHeroes, state.selectedRole)
+      Wish.CheckNexus -> checkNexus(state.proposedHeroes, state.selectedRole)
+      Wish.CheckOverwatch -> checkOverwatch(state.proposedHeroes, state.selectedRole)
+      Wish.CheckStarcraft -> checkStarcraft(state.proposedHeroes, state.selectedRole)
+      Wish.CheckWarcraft -> checkWarcraft(state.proposedHeroes, state.selectedRole)
+      Wish.CheckAllRoles -> checkAllRoles(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckBruiser -> checkBruiser(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckHealer -> checkHealer(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckMeleeAssassin -> checkMeleeAssassin(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckRangedAssassin -> checkRangedAssassin(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckSupport -> checkSupport(state.proposedHeroes, state.selectedUniverse)
+      Wish.CheckTank -> checkTank(state.proposedHeroes, state.selectedUniverse)
     }
   }
 
   private fun reduce(state: State, effect: Effect): State = when (effect) {
     is Effect.HeroSelected -> state.copy(
-      draftedHeroes = state.draftedHeroes + Triple(effect.team, effect.action, effect.hero),
-      actions = state.actions.drop(1)
+      draftedHeroes = effect.draftedHeroes,
+      actions = effect.actions
     )
-    Effect.NoEffect -> state
+    is Effect.AllUniversesChecked -> state.copy(
+      selectedUniverse = null,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.DiabloChecked -> state.copy(
+      selectedUniverse = Universe.Diablo,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.NexusChecked -> state.copy(
+      selectedUniverse = Universe.Nexus,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.OverwatchChecked -> state.copy(
+      selectedUniverse = Universe.Overwatch,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.StarcraftChecked -> state.copy(
+      selectedUniverse = Universe.Starcraft,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.WarcraftChecked -> state.copy(
+      selectedUniverse = Universe.Warcraft,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.AllRolesChecked -> state.copy(
+      selectedRole = null,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.BruiserChecked -> state.copy(
+      selectedRole = Role.Bruiser,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.HealerChecked -> state.copy(
+      selectedRole = Role.Healer,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.MeleeAssassinChecked -> state.copy(
+      selectedRole = Role.MeleeAssassin,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.RangedAssassinChecked -> state.copy(
+      selectedRole = Role.RangedAssassin,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.SupportChecked -> state.copy(
+      selectedRole = Role.Support,
+      filteredHeroes = effect.filteredHeroes
+    )
+    is Effect.TankChecked -> state.copy(
+      selectedRole = Role.Tank,
+      filteredHeroes = effect.filteredHeroes
+    )
   }
 }
