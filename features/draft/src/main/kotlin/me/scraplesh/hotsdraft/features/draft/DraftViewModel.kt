@@ -64,6 +64,7 @@ class DraftViewModel(initialState: State) :
     val filteredHeroes: List<Hero> = proposedHeroes
   ) {
     val currentAction get() = actions.firstOrNull()
+    val nextAction get() = actions.getOrNull(1)
 
     val yourPick1: Hero?
       get() = draftedHeroes.firstOrNull { (team, action, _) ->

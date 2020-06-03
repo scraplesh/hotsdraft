@@ -2,8 +2,8 @@ package me.scraplesh.hotsdraft.features.draft
 
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.RadioButton
 import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,21 +48,53 @@ class DraftView(private val coroutineScope: CoroutineScope) :
     val tankChecked: Boolean,
     val heroes: List<Hero>,
     val yourPick1: Hero?,
+    val isYourPick1Current: Boolean,
+    val isYourPick1Next: Boolean,
     val yourPick2: Hero?,
+    val isYourPick2Current: Boolean,
+    val isYourPick2Next: Boolean,
     val yourPick3: Hero?,
+    val isYourPick3Current: Boolean,
+    val isYourPick3Next: Boolean,
     val yourPick4: Hero?,
+    val isYourPick4Current: Boolean,
+    val isYourPick4Next: Boolean,
     val yourPick5: Hero?,
+    val isYourPick5Current: Boolean,
+    val isYourPick5Next: Boolean,
     val yourBan1: Hero?,
+    val isYourBan1Current: Boolean,
+    val isYourBan1Next: Boolean,
     val yourBan2: Hero?,
+    val isYourBan2Current: Boolean,
+    val isYourBan2Next: Boolean,
     val yourBan3: Hero?,
+    val isYourBan3Current: Boolean,
+    val isYourBan3Next: Boolean,
     val enemyPick1: Hero?,
+    val isEnemyPick1Current: Boolean,
+    val isEnemyPick1Next: Boolean,
     val enemyPick2: Hero?,
+    val isEnemyPick2Current: Boolean,
+    val isEnemyPick2Next: Boolean,
     val enemyPick3: Hero?,
+    val isEnemyPick3Current: Boolean,
+    val isEnemyPick3Next: Boolean,
     val enemyPick4: Hero?,
+    val isEnemyPick4Current: Boolean,
+    val isEnemyPick4Next: Boolean,
     val enemyPick5: Hero?,
+    val isEnemyPick5Current: Boolean,
+    val isEnemyPick5Next: Boolean,
     val enemyBan1: Hero?,
+    val isEnemyBan1Current: Boolean,
+    val isEnemyBan1Next: Boolean,
     val enemyBan2: Hero?,
-    val enemyBan3: Hero?
+    val isEnemyBan2Current: Boolean,
+    val isEnemyBan2Next: Boolean,
+    val enemyBan3: Hero?,
+    val isEnemyBan3Current: Boolean,
+    val isEnemyBan3Next: Boolean
   )
 
   sealed class UiEvent {
@@ -107,131 +139,435 @@ class DraftView(private val coroutineScope: CoroutineScope) :
   }
 
   private var yourPick1View by didSet<ImageView> {
-    viewModels.map { it.yourPick1 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourPick1 == new.yourPick1 &&
+          old.isYourPick1Current == new.isYourPick1Current &&
+          old.isYourPick1Next == new.isYourPick1Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourPick1 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourPick1.drawableId
+            )
+            viewModel.isYourPick1Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourPick1Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourPick2View by didSet<ImageView> {
-    viewModels.map { it.yourPick2 }
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourPick2 == new.yourPick2 &&
+          old.isYourPick2Current == new.isYourPick2Current &&
+          old.isYourPick2Next == new.isYourPick2Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourPick2 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourPick2.drawableId
+            )
+            viewModel.isYourPick2Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourPick2Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourPick3View by didSet<ImageView> {
-    viewModels.map { it.yourPick3 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourPick3 == new.yourPick3 &&
+          old.isYourPick3Current == new.isYourPick3Current &&
+          old.isYourPick3Next == new.isYourPick3Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourPick3 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourPick3.drawableId
+            )
+            viewModel.isYourPick3Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourPick3Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourPick4View by didSet<ImageView> {
-    viewModels.map { it.yourPick4 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourPick4 == new.yourPick4 &&
+          old.isYourPick4Current == new.isYourPick4Current &&
+          old.isYourPick4Next == new.isYourPick4Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourPick4 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourPick4.drawableId
+            )
+            viewModel.isYourPick4Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourPick4Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourPick5View by didSet<ImageView> {
-    viewModels.map { it.yourPick5 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourPick5 == new.yourPick5 &&
+          old.isYourPick5Current == new.isYourPick5Current &&
+          old.isYourPick5Next == new.isYourPick5Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourPick5 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourPick5.drawableId
+            )
+            viewModel.isYourPick5Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourPick5Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourBan1View by didSet<ImageView> {
-    viewModels.map { it.yourBan1 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourBan1 == new.yourBan1 &&
+          old.isYourBan1Current == new.isYourBan1Current &&
+          old.isYourBan1Next == new.isYourBan1Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourBan1 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourBan1.drawableId
+            )
+            viewModel.isYourBan1Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourBan1Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourBan2View by didSet<ImageView> {
-    viewModels.map { it.yourBan2 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourBan2 == new.yourBan2 &&
+          old.isYourBan2Current == new.isYourBan2Current &&
+          old.isYourBan2Next == new.isYourBan2Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourBan2 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourBan2.drawableId
+            )
+            viewModel.isYourBan2Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourBan2Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var yourBan3View by didSet<ImageView> {
-    viewModels.map { it.yourBan3 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.yourBan3 == new.yourBan3 &&
+          old.isYourBan3Current == new.isYourBan3Current &&
+          old.isYourBan3Next == new.isYourBan3Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.yourBan3 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.yourBan3.drawableId
+            )
+            viewModel.isYourBan3Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isYourBan3Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyPick1View by didSet<ImageView> {
-    viewModels.map { it.enemyPick1 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyPick1 == new.enemyPick1 &&
+          old.isEnemyPick1Current == new.isEnemyPick1Current &&
+          old.isEnemyPick1Next == new.isEnemyPick1Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyPick1 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyPick1.drawableId
+            )
+            viewModel.isEnemyPick1Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyPick1Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyPick2View by didSet<ImageView> {
-    viewModels.map { it.enemyPick2 }
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyPick2 == new.enemyPick2 &&
+          old.isEnemyPick2Current == new.isEnemyPick2Current &&
+          old.isEnemyPick2Next == new.isEnemyPick2Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyPick2 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyPick2.drawableId
+            )
+            viewModel.isEnemyPick2Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyPick2Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyPick3View by didSet<ImageView> {
-    viewModels.map { it.enemyPick3 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyPick3 == new.enemyPick3 &&
+          old.isEnemyPick3Current == new.isEnemyPick3Current &&
+          old.isEnemyPick3Next == new.isEnemyPick3Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyPick3 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyPick3.drawableId
+            )
+            viewModel.isEnemyPick3Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyPick3Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyPick4View by didSet<ImageView> {
-    viewModels.map { it.enemyPick4 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyPick4 == new.enemyPick4 &&
+          old.isEnemyPick4Current == new.isEnemyPick4Current &&
+          old.isEnemyPick4Next == new.isEnemyPick4Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyPick4 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyPick4.drawableId
+            )
+            viewModel.isEnemyPick4Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyPick4Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyPick5View by didSet<ImageView> {
-    viewModels.map { it.enemyPick5 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyPick5 == new.enemyPick5 &&
+          old.isEnemyPick5Current == new.isEnemyPick5Current &&
+          old.isEnemyPick5Next == new.isEnemyPick5Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyPick5 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyPick5.drawableId
+            )
+            viewModel.isEnemyPick5Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyPick5Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
   private var enemyBan1View by didSet<ImageView> {
-    viewModels.map { it.enemyBan1 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyBan1 == new.enemyBan1 &&
+          old.isEnemyBan1Current == new.isEnemyBan1Current &&
+          old.isEnemyBan1Next == new.isEnemyBan1Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyBan1 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyBan1.drawableId
+            )
+            viewModel.isEnemyBan1Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyBan1Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }
 
   private var enemyBan2View by didSet<ImageView> {
-    coroutineScope.launch {
-      viewModels.map { it.enemyBan2 }
-        .distinctUntilChanged()
-        .onEach { hero ->
-          setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
-        }
-        .launchIn(coroutineScope)
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyBan2 == new.enemyBan2 &&
+          old.isEnemyBan2Current == new.isEnemyBan2Current &&
+          old.isEnemyBan2Next == new.isEnemyBan2Next
     }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyBan2 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyBan2.drawableId
+            )
+            viewModel.isEnemyBan2Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyBan2Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
+      }
+      .launchIn(coroutineScope)
   }
   private var enemyBan3View by didSet<ImageView> {
-    viewModels.map { it.enemyBan3 }
-      .distinctUntilChanged()
-      .onEach { hero ->
-        setImageDrawable(hero?.let { ContextCompat.getDrawable(context, hero.drawableId) })
+    viewModels.distinctUntilChanged { old, new ->
+      old.enemyBan3 == new.enemyBan3 &&
+          old.isEnemyBan3Current == new.isEnemyBan3Current &&
+          old.isEnemyBan3Next == new.isEnemyBan3Next
+    }
+      .onEach { viewModel ->
+        setImageDrawable(
+          when {
+            viewModel.enemyBan3 != null -> ContextCompat.getDrawable(
+              context,
+              viewModel.enemyBan3.drawableId
+            )
+            viewModel.isEnemyBan3Current -> ContextCompat.getDrawable(
+              context,
+              R.drawable.green_circle
+            )
+            viewModel.isEnemyBan3Next -> ContextCompat.getDrawable(
+              context,
+              R.drawable.yellow_circle
+            )
+            else -> null
+          }
+        )
       }
       .launchIn(coroutineScope)
   }

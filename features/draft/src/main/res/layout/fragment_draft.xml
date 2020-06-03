@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toEndOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintStart_toStartOf="@id/imageview_draft_your_team_frame1"
             app:layout_constraintTop_toTopOf="@id/imageview_draft_your_team_frame1"
-            tools:src="@drawable/hero_alarak"
+            tools:src="@drawable/yellow_circle"
             />
 
         <ImageView

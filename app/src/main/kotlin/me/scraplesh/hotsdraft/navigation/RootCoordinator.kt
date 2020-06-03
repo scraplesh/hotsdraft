@@ -18,7 +18,7 @@ class RootCoordinator(private val router: Router) : Coordinator {
       }
       is BattlegroundSelected -> router.navigateTo(HotsDraftScreen.Lot(t.battleground))
       is FirstTeamSelectedNavigationEvent -> {
-        router.navigateTo(HotsDraftScreen.Draft(t.battleground, t.team))
+        router.replaceScreen(HotsDraftScreen.Draft(t.battleground, t.team))
       }
     }
   }
