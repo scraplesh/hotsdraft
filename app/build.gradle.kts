@@ -1,5 +1,3 @@
-//import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -22,14 +20,34 @@ android {
         }
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("../signing/debug.jks")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+        create("release") {
+            storeFile = file("../signing/release.jks")
+            val hotsDraftStorePassword: String by project
+            storePassword = hotsDraftStorePassword
+            val hotsDraftReleaseKeyAliasFromSettings: String by project
+            keyAlias = hotsDraftReleaseKeyAliasFromSettings
+            val hotsDraftReleaseKeyPasswordFromSettings: String by project
+            keyPassword = hotsDraftReleaseKeyPasswordFromSettings
+        }
+    }
+
     buildTypes {
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
             applicationIdSuffix = ".debug"
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -46,6 +64,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+    implementation(project(":mviflow"))
 
     implementation(project(":feature-draft"))
     implementation(project(":feature-lot"))
@@ -61,12 +80,3 @@ dependencies {
     implementation(Deps.kotlinStdLib)
     implementation(Deps.material)
 }
-
-//tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class).all {
-//    kotlinOptions {
-//        freeCompilerArgs = freeCompilerArgs + listOf(
-//            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-//            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
-//        )
-//    }
-//}

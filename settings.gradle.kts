@@ -2,6 +2,7 @@ include(
     ":app",
     ":domain",
     ":common",
+    ":mviflow",
     // region features
     ":feature-selectbattleground",
     ":feature-lot",

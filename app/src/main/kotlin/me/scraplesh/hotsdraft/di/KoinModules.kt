@@ -10,5 +10,6 @@ import me.scraplesh.hotsdraft.features.draft.draftModule
 @InternalCoroutinesApi
 val koinModules = listOf(
     navigationModule,
+    useCasesModule,
     draftModule
 )

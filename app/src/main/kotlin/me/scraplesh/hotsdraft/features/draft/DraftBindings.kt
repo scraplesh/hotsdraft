@@ -12,12 +12,13 @@ import me.scraplesh.domain.draft.Player
 import me.scraplesh.domain.draft.Team
 import me.scraplesh.hotsdraft.features.draft.DraftView.UiEvent
 import me.scraplesh.hotsdraft.features.draft.DraftViewModel.Wish
+import me.scraplesh.mviflow.Bindings
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: DraftViewModel) :
-  AndroidBindings<DraftView>(coroutineScope) {
+  Bindings<DraftView>(coroutineScope) {
 
   override fun setup(view: DraftView) {
     bind(view to viewModel using { uiEvent ->
@@ -39,11 +40,8 @@ class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: Draft
       }
     })
     bind(viewModel to view using { state ->
-//      team == Team.Your &&
-//          action is DraftAction.Pick &&
-//          action.player == Player.First
       DraftView.ViewModel(
-        battleground = state.battleground,
+        battleground = state.draft.battleground,
         heroes = state.filteredHeroes,
         allUniversesChecked = state.selectedUniverse == null,
         diabloChecked = state.selectedUniverse == Universe.Diablo,
@@ -58,178 +56,210 @@ class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: Draft
         rangedAssassinChecked = state.selectedRole == Role.RangedAssassin,
         supportChecked = state.selectedRole == Role.Support,
         tankChecked = state.selectedRole == Role.Tank,
-        yourPick1 = state.yourPick1,
-        isYourPick1Current = state.currentAction?.let { (team, action) ->
+        yourPick1 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Pick && action.player == Player.First
+        }?.third,
+        isYourPick1Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.First
         } ?: false,
-        isYourPick1Next = state.nextAction?.let { (team, action) ->
+        isYourPick1Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.First
         } ?: false,
-        yourPick2 = state.yourPick2,
-        isYourPick2Current = state.currentAction?.let { (team, action) ->
+        yourPick2 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Pick && action.player == Player.Second
+        }?.third,
+        isYourPick2Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Second
         } ?: false,
-        isYourPick2Next = state.nextAction?.let { (team, action) ->
+        isYourPick2Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Second
         } ?: false,
-        yourPick3 = state.yourPick3,
-        isYourPick3Current = state.currentAction?.let { (team, action) ->
+        yourPick3 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Pick && action.player == Player.Third
+        }?.third,
+        isYourPick3Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Third
         } ?: false,
-        isYourPick3Next = state.nextAction?.let { (team, action) ->
+        isYourPick3Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Third
         } ?: false,
-        yourPick4 = state.yourPick4,
-        isYourPick4Current = state.currentAction?.let { (team, action) ->
+        yourPick4 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Pick && action.player == Player.Forth
+        }?.third,
+        isYourPick4Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Forth
         } ?: false,
-        isYourPick4Next = state.nextAction?.let { (team, action) ->
+        isYourPick4Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Forth
         } ?: false,
-        yourPick5 = state.yourPick5,
-        isYourPick5Current = state.currentAction?.let { (team, action) ->
+        yourPick5 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Pick && action.player == Player.Fifth
+        }?.third,
+        isYourPick5Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Fifth
         } ?: false,
-        isYourPick5Next = state.nextAction?.let { (team, action) ->
+        isYourPick5Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Pick &&
               action.player == Player.Fifth
         } ?: false,
-        yourBan1 = state.yourBan1,
-        isYourBan1Current = state.currentAction?.let { (team, action) ->
+        yourBan1 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Ban && action.banPosition == BanPosition.First
+        }?.third,
+        isYourBan1Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.First
         } ?: false,
-        isYourBan1Next = state.nextAction?.let { (team, action) ->
+        isYourBan1Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.First
         } ?: false,
-        yourBan2 = state.yourBan2,
-        isYourBan2Current = state.currentAction?.let { (team, action) ->
+        yourBan2 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Ban && action.banPosition == BanPosition.Second
+        }?.third,
+        isYourBan2Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Second
         } ?: false,
-        isYourBan2Next = state.nextAction?.let { (team, action) ->
+        isYourBan2Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Second
         } ?: false,
-        yourBan3 = state.yourBan3,
-        isYourBan3Current = state.currentAction?.let { (team, action) ->
+        yourBan3 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Your && action is DraftAction.Ban && action.banPosition == BanPosition.Third
+        }?.third,
+        isYourBan3Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Third
         } ?: false,
-        isYourBan3Next = state.nextAction?.let { (team, action) ->
+        isYourBan3Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Your &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Third
         } ?: false,
-        enemyPick1 = state.enemyPick1,
-        isEnemyPick1Current = state.currentAction?.let { (team, action) ->
+        enemyPick1 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Pick && action.player == Player.First
+        }?.third,
+        isEnemyPick1Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.First
         } ?: false,
-        isEnemyPick1Next = state.nextAction?.let { (team, action) ->
+        isEnemyPick1Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.First
         } ?: false,
-        enemyPick2 = state.enemyPick2,
-        isEnemyPick2Current = state.currentAction?.let { (team, action) ->
+        enemyPick2 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Pick && action.player == Player.Second
+        }?.third,
+        isEnemyPick2Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Second
         } ?: false,
-        isEnemyPick2Next = state.nextAction?.let { (team, action) ->
+        isEnemyPick2Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Second
         } ?: false,
-        enemyPick3 = state.enemyPick3,
-        isEnemyPick3Current = state.currentAction?.let { (team, action) ->
+        enemyPick3 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Pick && action.player == Player.Third
+        }?.third,
+        isEnemyPick3Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Third
         } ?: false,
-        isEnemyPick3Next = state.nextAction?.let { (team, action) ->
+        isEnemyPick3Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Third
         } ?: false,
-        enemyPick4 = state.enemyPick4,
-        isEnemyPick4Current = state.currentAction?.let { (team, action) ->
+        enemyPick4 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Pick && action.player == Player.Forth
+        }?.third,
+        isEnemyPick4Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Forth
         } ?: false,
-        isEnemyPick4Next = state.nextAction?.let { (team, action) ->
+        isEnemyPick4Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Forth
         } ?: false,
-        enemyPick5 = state.enemyPick5,
-        isEnemyPick5Current = state.currentAction?.let { (team, action) ->
+        enemyPick5 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Pick && action.player == Player.Fifth
+        }?.third,
+        isEnemyPick5Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Fifth
         } ?: false,
-        isEnemyPick5Next = state.nextAction?.let { (team, action) ->
+        isEnemyPick5Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Pick &&
               action.player == Player.Fifth
         } ?: false,
-        enemyBan1 = state.enemyBan1,
-        isEnemyBan1Current = state.currentAction?.let { (team, action) ->
+        enemyBan1 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Ban && action.banPosition == BanPosition.First
+        }?.third,
+        isEnemyBan1Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.First
         } ?: false,
-        isEnemyBan1Next = state.nextAction?.let { (team, action) ->
+        isEnemyBan1Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.First
         } ?: false,
-        enemyBan2 = state.enemyBan2,
-        isEnemyBan2Current = state.currentAction?.let { (team, action) ->
+        enemyBan2 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Ban && action.banPosition == BanPosition.Second
+        }?.third,
+        isEnemyBan2Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Second
         } ?: false,
-        isEnemyBan2Next = state.nextAction?.let { (team, action) ->
+        isEnemyBan2Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Second
         } ?: false,
-        enemyBan3 = state.enemyBan3,
-        isEnemyBan3Current = state.currentAction?.let { (team, action) ->
+        enemyBan3 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
+          team == Team.Enemy && action is DraftAction.Ban && action.banPosition == BanPosition.Third
+        }?.third,
+        isEnemyBan3Current = state.draft.currentAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Third
         } ?: false,
-        isEnemyBan3Next = state.nextAction?.let { (team, action) ->
+        isEnemyBan3Next = state.draft.nextAction?.let { (team, action) ->
           team == Team.Enemy &&
               action is DraftAction.Ban &&
               action.banPosition == BanPosition.Third
