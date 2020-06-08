@@ -1,7 +1,7 @@
 package me.scraplesh.domain.draft
 
 import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 
 typealias DraftedHero = Triple<Team, DraftAction, Hero>
 

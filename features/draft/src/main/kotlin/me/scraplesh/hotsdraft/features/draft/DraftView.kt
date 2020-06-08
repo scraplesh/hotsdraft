@@ -15,14 +15,10 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
 import reactivecircus.flowbinding.android.widget.checkedChanges
 
-infix fun <T> List<T>.equalTo(other: List<T>): Boolean =
-  size == other.size &&
-      mapIndexed { index: Int, item: T -> item == other[index] }
-        .all { it }
 
 @FlowPreview
 @InternalCoroutinesApi

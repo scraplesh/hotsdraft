@@ -13,6 +13,7 @@ import me.scraplesh.domain.Battleground
 import me.scraplesh.domain.draft.Team
 import me.scraplesh.hotsdraft.common.platform.argumentNotNull
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
+import me.scraplesh.mviflow.Bindings
 import org.koin.core.parameter.parametersOf
 import org.koin.androidx.scope.lifecycleScope as koinLifecycleScope
 
@@ -31,7 +32,7 @@ class DraftFragment : Fragment() {
   private var battleground: Battleground by argumentNotNull()
   private var teamStarts: Team by argumentNotNull()
   private val mviView: DraftView by koinLifecycleScope.inject { parametersOf(lifecycleScope) }
-  private val bindings: me.scraplesh.mviflow.Bindings<DraftView> by koinLifecycleScope.inject {
+  private val bindings: Bindings<DraftView> by koinLifecycleScope.inject {
     parametersOf(this, lifecycleScope, battleground, teamStarts)
   }
 

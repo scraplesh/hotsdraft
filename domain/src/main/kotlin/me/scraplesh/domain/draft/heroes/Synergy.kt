@@ -1,8 +1,6 @@
 package me.scraplesh.domain.draft.heroes
 
-import com.sun.org.apache.xpath.internal.operations.And
-import com.sun.org.apache.xpath.internal.operations.Lt
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 
 val Hero.synergyHeroes: List<Hero>
     get() = when (this) {

@@ -1,4 +1,4 @@
-package me.scraplesh.domain
+package me.scraplesh.domain.heroes
 
 enum class Universe {
     Diablo,

@@ -2,7 +2,7 @@ package me.scraplesh.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 import me.scraplesh.domain.draft.Draft
 import me.scraplesh.domain.draft.DraftedHero
 

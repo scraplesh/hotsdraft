@@ -7,12 +7,30 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import me.scraplesh.domain.Hero
-import me.scraplesh.domain.Role
-import me.scraplesh.domain.Universe
+import me.scraplesh.domain.heroes.Hero
+import me.scraplesh.domain.heroes.Role
+import me.scraplesh.domain.heroes.Universe
 import me.scraplesh.domain.draft.Draft
+import me.scraplesh.domain.usecases.FilterHeroesUseCase
 import me.scraplesh.domain.usecases.SortHeroesUseCase
 import me.scraplesh.domain.usecases.SelectHeroUseCase
+
+typealias HeroesSorter = (heroes: List<Hero>) -> List<Hero>
+typealias HeroesFilter = (heroes: List<Hero>) -> List<Hero>
+
+class UniverseFilter(private val universe: Universe?) : HeroesFilter {
+  override fun invoke(heroes: List<Hero>): List<Hero> =
+    heroes.filter { hero -> universe?.let { hero.universe == it } ?: true }
+}
+
+class RoleFilter(private val role: Role?) : HeroesFilter {
+  override fun invoke(heroes: List<Hero>): List<Hero> =
+    heroes.filter { hero -> role?.let { hero.role == it } ?: true }
+}
+
+class AlphabetSorter(private val getName: (Hero) -> String) : HeroesSorter {
+  override fun invoke(heroes: List<Hero>): List<Hero> = heroes.sortedByDescending(getName)
+}
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -20,56 +38,44 @@ import me.scraplesh.domain.usecases.SelectHeroUseCase
 class DraftViewModel(
   initialState: State,
   private val selectHeroUseCase: SelectHeroUseCase,
-  private val sortHeroes: SortHeroesUseCase
+  private val sortHeroes: SortHeroesUseCase,
+  private val filterHeroes: FilterHeroesUseCase
 ) :
   ViewModel(),
   FlowCollector<DraftViewModel.Wish>,
   Flow<DraftViewModel.State> {
 
-  private val states = ConflatedBroadcastChannel(initialState)
   private val wishes = ConflatedBroadcastChannel<Wish>()
+  private val states = ConflatedBroadcastChannel(initialState)
 
   init {
     wishes.asFlow()
-      .flatMapConcat { wish -> act(wish, states.value) }
-      .map { effect -> reduce(states.value, effect) }
-      .onEach { state -> states.send(state) }
+      .flatMapConcat { wish -> act(wish, states.value).map { effect -> wish to effect } }
+      .map { (wish, effect) -> Triple(wish, effect, reduce(states.value, effect)) }
+      .onEach { (wish, effect, state) ->
+        postProcess(wish, effect, state)?.let { wishes.send(it) }
+        states.send(state)
+      }
       .launchIn(viewModelScope)
   }
 
   sealed class Wish {
     class SelectHero(val hero: Hero) : Wish()
-    object CheckAllUniverses : Wish()
-    object CheckDiablo : Wish()
-    object CheckNexus : Wish()
-    object CheckOverwatch : Wish()
-    object CheckStarcraft : Wish()
-    object CheckWarcraft : Wish()
-    object CheckAllRoles : Wish()
-    object CheckBruiser : Wish()
-    object CheckHealer : Wish()
-    object CheckMeleeAssassin : Wish()
-    object CheckRangedAssassin : Wish()
-    object CheckSupport : Wish()
-    object CheckTank : Wish()
+    class CheckUniverse(val universe: Universe?) : Wish()
+    class CheckRole(val role: Role?) : Wish()
   }
 
   data class State(
-    val draft: Draft,
-    val selectedUniverse: Universe? = null,
-    val selectedRole: Role? = null,
-    val proposedHeroes: List<Hero> = Hero.values().asList(),
-    val filteredHeroes: List<Hero> = proposedHeroes
+      val draft: Draft,
+      val heroes: List<Hero> = Hero.values().asList(),
+      val sorters: List<HeroesSorter> = emptyList(),
+      val filters: List<HeroesFilter> = emptyList()
   )
 
   sealed class Effect {
-    class UniverseChecked(val universe: Universe?, val filteredHeroes: List<Hero>) : Effect()
-    class RoleChecked(val role: Role?, val filteredHeroes: List<Hero>) : Effect()
-    class HeroSelected(
-      val draft: Draft,
-      val proposedHeroes: List<Hero>,
-      val filteredHeroes: List<Hero>
-    ) : Effect()
+    class UniverseChecked(val universe: Universe?) : Effect()
+    class RoleChecked(val role: Role?) : Effect()
+    class HeroSelected(val draft: Draft, val heroes: List<Hero>) : Effect()
   }
 
   override suspend fun collect(collector: FlowCollector<State>) {
@@ -84,94 +90,38 @@ class DraftViewModel(
   private fun act(wish: Wish, state: State): Flow<Effect> {
     fun selectHero(hero: Hero, draft: Draft): Flow<Effect> =
       selectHeroUseCase(hero, draft).flatMapConcat { updatedDraft ->
-        sortHeroes(updatedDraft)
-
-        Effect.HeroSelected(
-          draft = updatedDraft,
-          proposedHeroes = state.proposedHeroes.filter { it != hero },
-          filteredHeroes = state.filteredHeroes.filter { it != hero }
-        )
+        sortHeroes(updatedDraft).flatMapConcat { sortedHeroes ->
+          filterHeroes(sortedHeroes)
+        }
+          .map { filteredHeroes ->
+            Effect.HeroSelected(
+              draft = updatedDraft,
+              heroes = filteredHeroes
+            )
+          }
       }
 
-    fun checkUniverse(
-      universe: Universe?,
-      proposedHeroes: List<Hero>,
-      selectedRole: Role?
-    ): Flow<Effect> = flowOf(
-      Effect.UniverseChecked(
-        universe,
-        proposedHeroes.filter { hero ->
-          selectedRole?.let { hero.role == selectedRole } ?: true &&
-              universe?.let { hero.universe == universe } ?: true
-        }
-      )
-    )
-
-    fun checkRole(
-      role: Role?,
-      proposedHeroes: List<Hero>,
-      selectedUniverse: Universe?
-    ): Flow<Effect> = flowOf(
-      Effect.RoleChecked(
-        role,
-        proposedHeroes.filter { hero ->
-          selectedUniverse?.let { hero.universe == selectedUniverse } ?: true &&
-              role?.let { hero.role == role } ?: true
-        }
-      )
-    )
+    fun checkUniverse(universe: Universe?): Flow<Effect> = flowOf(Effect.UniverseChecked(universe))
+    fun checkRole(role: Role?, heroes: List<Hero>): Flow<Effect> = flowOf(Effect.RoleChecked(role))
 
     return when (wish) {
       is Wish.SelectHero -> selectHero(wish.hero, state.draft)
-      Wish.CheckAllUniverses -> checkUniverse(null, state.proposedHeroes, state.selectedRole)
-      Wish.CheckDiablo -> checkUniverse(Universe.Diablo, state.proposedHeroes, state.selectedRole)
-      Wish.CheckNexus -> checkUniverse(Universe.Nexus, state.proposedHeroes, state.selectedRole)
-      Wish.CheckOverwatch -> checkUniverse(
-        Universe.Overwatch,
-        state.proposedHeroes,
-        state.selectedRole
-      )
-      Wish.CheckStarcraft -> checkUniverse(
-        Universe.Starcraft,
-        state.proposedHeroes,
-        state.selectedRole
-      )
-      Wish.CheckWarcraft -> checkUniverse(
-        Universe.Warcraft,
-        state.proposedHeroes,
-        state.selectedRole
-      )
-      Wish.CheckAllRoles -> checkRole(null, state.proposedHeroes, state.selectedUniverse)
-      Wish.CheckBruiser -> checkRole(Role.Bruiser, state.proposedHeroes, state.selectedUniverse)
-      Wish.CheckHealer -> checkRole(Role.Healer, state.proposedHeroes, state.selectedUniverse)
-      Wish.CheckMeleeAssassin -> checkRole(
-        Role.MeleeAssassin,
-        state.proposedHeroes,
-        state.selectedUniverse
-      )
-      Wish.CheckRangedAssassin -> checkRole(
-        Role.RangedAssassin,
-        state.proposedHeroes,
-        state.selectedUniverse
-      )
-      Wish.CheckSupport -> checkRole(Role.Support, state.proposedHeroes, state.selectedUniverse)
-      Wish.CheckTank -> checkRole(Role.Tank, state.proposedHeroes, state.selectedUniverse)
+      is Wish.CheckUniverse -> checkUniverse(universe = wish.universe, heroes = state.heroes)
+      is Wish.CheckRole -> checkRole(state.heroes, role = wish.role)
     }
   }
 
   private fun reduce(state: State, effect: Effect): State = when (effect) {
-    is Effect.HeroSelected -> state.copy(
-      draft = effect.draft,
-      proposedHeroes = effect.proposedHeroes,
-      filteredHeroes = effect.filteredHeroes
-    )
-    is Effect.UniverseChecked -> state.copy(
-      selectedUniverse = effect.universe,
-      filteredHeroes = effect.filteredHeroes
-    )
-    is Effect.RoleChecked -> state.copy(
-      selectedRole = effect.role,
-      filteredHeroes = effect.filteredHeroes
-    )
+    is Effect.HeroSelected -> state.copy(draft = effect.draft, heroes = effect.heroes)
+    is Effect.UniverseChecked -> state
+    is Effect.RoleChecked -> state
+  }
+
+  private fun postProcess(wish: Wish, effect: Effect, state: State): Wish? {
+    return when (effect) {
+      is Effect.UniverseChecked -> TODO()
+      is Effect.RoleChecked -> TODO()
+      else -> null
+    }
   }
 }

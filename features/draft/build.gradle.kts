@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+    implementation(project(":mviflow"))
 
     implementation(Deps.adapterDelegatesKotlinDsl)
     implementation(Deps.androidxAppCompat)

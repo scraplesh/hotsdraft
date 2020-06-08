@@ -1,6 +1,6 @@
 package me.scraplesh.domain.tier
 
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 
 enum class Tier { S, A, B, C, D }
 

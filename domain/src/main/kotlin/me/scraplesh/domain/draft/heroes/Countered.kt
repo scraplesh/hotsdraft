@@ -1,6 +1,6 @@
 package me.scraplesh.domain.draft.heroes
 
-import me.scraplesh.domain.Hero
+import me.scraplesh.domain.heroes.Hero
 
 val Hero.counteredBy: List<Hero>
     get() = when (this) {

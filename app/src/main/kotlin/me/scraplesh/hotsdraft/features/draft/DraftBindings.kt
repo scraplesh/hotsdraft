@@ -4,8 +4,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import me.scraplesh.domain.Role
-import me.scraplesh.domain.Universe
+import me.scraplesh.domain.heroes.Role
+import me.scraplesh.domain.heroes.Universe
 import me.scraplesh.domain.draft.BanPosition
 import me.scraplesh.domain.draft.DraftAction
 import me.scraplesh.domain.draft.Player
@@ -42,7 +42,7 @@ class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: Draft
     bind(viewModel to view using { state ->
       DraftView.ViewModel(
         battleground = state.draft.battleground,
-        heroes = state.filteredHeroes,
+        heroes = state.heroes,
         allUniversesChecked = state.selectedUniverse == null,
         diabloChecked = state.selectedUniverse == Universe.Diablo,
         nexusChecked = state.selectedUniverse == Universe.Nexus,
