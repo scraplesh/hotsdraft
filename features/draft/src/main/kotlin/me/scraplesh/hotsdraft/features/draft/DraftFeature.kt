@@ -97,7 +97,10 @@ class DraftFeature(
   }
 
   class DraftBootstrapper : Bootstrapper<Action> {
-    override fun invoke(): Flow<Action> = flowOf(Action.SortAllHeroes)
+    override fun invoke(): Flow<Action> = flowOf(
+      Action.SortAllHeroes,
+      Action.FilterHeroes
+    )
   }
 
   class DraftActor(
@@ -135,12 +138,11 @@ class DraftFeature(
       filters: List<HeroesFilter>
     ): Flow<Effect> = selectHeroUseCase(hero, draft).flatMapConcat { updatedDraft ->
       val newFilters = filters + NotHeroFilter(hero)
+      filterHeroes(heroes, newFilters).flatMapConcat { filteredHeroesEffect ->
+        val filteredHeroes = (filteredHeroesEffect as Effect.HeroesFiltered).heroes
 
-      sortHeroes(heroes, sorters).flatMapConcat { sortedHeroesEffect ->
-        val sortedHeroes = (sortedHeroesEffect as Effect.HeroesSorted).heroes
-
-        filterHeroes(sortedHeroes, newFilters).map { filteredHeroesEffect ->
-          val filteredHeroes = (filteredHeroesEffect as Effect.HeroesFiltered).heroes
+        sortHeroes(filteredHeroes, sorters).map { sortedHeroesEffect ->
+          val sortedHeroes = (sortedHeroesEffect as Effect.HeroesSorted).heroes
 
           Effect.HeroSelected(
             draft = updatedDraft,
