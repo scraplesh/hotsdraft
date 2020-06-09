@@ -1,7 +1,6 @@
-package me.scraplesh.domain.draft.heroes
+package me.scraplesh.domain.heroes
 
 import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.heroes.Hero
 
 enum class BattlegroundCompliance { Strong, Average, Weak, Unknown }
 

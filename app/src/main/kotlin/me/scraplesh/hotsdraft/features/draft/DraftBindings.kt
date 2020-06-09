@@ -4,58 +4,71 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import me.scraplesh.domain.heroes.Role
-import me.scraplesh.domain.heroes.Universe
 import me.scraplesh.domain.draft.BanPosition
 import me.scraplesh.domain.draft.DraftAction
 import me.scraplesh.domain.draft.Player
 import me.scraplesh.domain.draft.Team
+import me.scraplesh.domain.heroes.Role
+import me.scraplesh.domain.heroes.Universe
+import me.scraplesh.domain.heroes.filter.RoleFilter
+import me.scraplesh.domain.heroes.filter.UniverseFilter
+import me.scraplesh.hotsdraft.features.draft.DraftFeature.Wish
 import me.scraplesh.hotsdraft.features.draft.DraftView.UiEvent
-import me.scraplesh.hotsdraft.features.draft.DraftViewModel.Wish
 import me.scraplesh.mviflow.Bindings
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
-class DraftBindings(coroutineScope: CoroutineScope, private val viewModel: DraftViewModel) :
+class DraftBindings(coroutineScope: CoroutineScope, private val feature: DraftFeature) :
   Bindings<DraftView>(coroutineScope) {
 
   override fun setup(view: DraftView) {
-    bind(view to viewModel using { uiEvent ->
+    bind(view to feature using { uiEvent ->
       when (uiEvent) {
         is UiEvent.HeroSelected -> Wish.SelectHero(uiEvent.hero)
-        UiEvent.AllUniversesChecked -> Wish.CheckAllUniverses
-        UiEvent.DiabloChecked -> Wish.CheckDiablo
-        UiEvent.NexusChecked -> Wish.CheckNexus
-        UiEvent.OverwatchChecked -> Wish.CheckOverwatch
-        UiEvent.StarcraftChecked -> Wish.CheckStarcraft
-        UiEvent.WarcraftChecked -> Wish.CheckWarcraft
-        UiEvent.AllRolesChecked -> Wish.CheckAllRoles
-        UiEvent.BruiserChecked -> Wish.CheckBruiser
-        UiEvent.HealerChecked -> Wish.CheckHealer
-        UiEvent.MeleeAssassinChecked -> Wish.CheckMeleeAssassin
-        UiEvent.RangedAssassinChecked -> Wish.CheckRangedAssassin
-        UiEvent.SupportChecked -> Wish.CheckSupport
-        UiEvent.TankChecked -> Wish.CheckTank
+        UiEvent.AllUniversesChecked -> Wish.UncheckUniverses
+        UiEvent.DiabloChecked -> Wish.CheckUniverse(Universe.Diablo)
+        UiEvent.NexusChecked -> Wish.CheckUniverse(Universe.Nexus)
+        UiEvent.OverwatchChecked -> Wish.CheckUniverse(Universe.Overwatch)
+        UiEvent.StarcraftChecked -> Wish.CheckUniverse(Universe.Starcraft)
+        UiEvent.WarcraftChecked -> Wish.CheckUniverse(Universe.Warcraft)
+        UiEvent.AllRolesChecked -> Wish.UncheckRoles
+        UiEvent.BruiserChecked -> Wish.CheckRole(Role.Bruiser)
+        UiEvent.HealerChecked -> Wish.CheckRole(Role.Healer)
+        UiEvent.MeleeAssassinChecked -> Wish.CheckRole(Role.MeleeAssassin)
+        UiEvent.RangedAssassinChecked -> Wish.CheckRole(Role.RangedAssassin)
+        UiEvent.SupportChecked -> Wish.CheckRole(Role.Support)
+        UiEvent.TankChecked -> Wish.CheckRole(Role.Tank)
       }
     })
-    bind(viewModel to view using { state ->
+    bind(feature to view using { state ->
       DraftView.ViewModel(
         battleground = state.draft.battleground,
-        heroes = state.heroes,
-        allUniversesChecked = state.selectedUniverse == null,
-        diabloChecked = state.selectedUniverse == Universe.Diablo,
-        nexusChecked = state.selectedUniverse == Universe.Nexus,
-        overwatchChecked = state.selectedUniverse == Universe.Overwatch,
-        starcraftChecked = state.selectedUniverse == Universe.Starcraft,
-        warcraftChecked = state.selectedUniverse == Universe.Warcraft,
-        allRolesChecked = state.selectedRole == null,
-        bruiserChecked = state.selectedRole == Role.Bruiser,
-        healerChecked = state.selectedRole == Role.Healer,
-        meleeAssassinChecked = state.selectedRole == Role.MeleeAssassin,
-        rangedAssassinChecked = state.selectedRole == Role.RangedAssassin,
-        supportChecked = state.selectedRole == Role.Support,
-        tankChecked = state.selectedRole == Role.Tank,
+        heroes = state.filteredHeroes,
+        allUniversesChecked = state.filters.none { filter -> filter is UniverseFilter },
+        diabloChecked = state.filters
+          .any { filter -> filter is UniverseFilter && filter.universe == Universe.Diablo },
+        nexusChecked = state.filters
+          .any { filter -> filter is UniverseFilter && filter.universe == Universe.Nexus },
+        overwatchChecked = state.filters
+          .any { filter -> filter is UniverseFilter && filter.universe == Universe.Overwatch },
+        starcraftChecked = state.filters
+          .any { filter -> filter is UniverseFilter && filter.universe == Universe.Starcraft },
+        warcraftChecked = state.filters
+          .any { filter -> filter is UniverseFilter && filter.universe == Universe.Warcraft },
+        allRolesChecked = state.filters.none { filter -> filter is RoleFilter },
+        bruiserChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.Bruiser },
+        healerChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.Healer },
+        meleeAssassinChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.MeleeAssassin },
+        rangedAssassinChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.RangedAssassin },
+        supportChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.Support },
+        tankChecked = state.filters
+          .any { filter -> filter is RoleFilter && filter.role == Role.Tank },
         yourPick1 = state.draft.draftedHeroes.firstOrNull { (team, action, _) ->
           team == Team.Your && action is DraftAction.Pick && action.player == Player.First
         }?.third,

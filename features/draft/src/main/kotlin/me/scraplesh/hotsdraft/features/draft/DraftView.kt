@@ -14,6 +14,7 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import kotlinx.equalTo
 import me.scraplesh.domain.Battleground
 import me.scraplesh.domain.heroes.Hero
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding

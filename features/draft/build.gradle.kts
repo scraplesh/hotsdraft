@@ -45,13 +45,11 @@ dependencies {
     implementation(Deps.androidxConstraintLayout)
     implementation(Deps.androidxCoordinatorLayout)
     implementation(Deps.androidxLifecycleRuntimeKtx)
-    implementation(Deps.androidxLifecycleViewModelKtx)
     implementation(Deps.androidxRecyclerView)
     implementation(Deps.coroutinesCore)
     implementation(Deps.coroutinesAndroid)
     implementation(Deps.flowBinding)
     implementation(Deps.koinScope)
-    implementation(Deps.koinViewModel)
     implementation(Deps.kotlinStdLib)
     implementation(Deps.material)
 }

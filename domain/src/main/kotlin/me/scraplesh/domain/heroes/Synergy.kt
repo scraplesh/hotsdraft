@@ -1,4 +1,4 @@
-package me.scraplesh.domain.draft.heroes
+package me.scraplesh.domain.heroes
 
 import me.scraplesh.domain.heroes.Hero
 

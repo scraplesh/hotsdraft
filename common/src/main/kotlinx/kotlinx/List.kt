@@ -1,4 +1,4 @@
-package kotlin.collections
+package kotlinx
 
 infix fun <T> List<T>.equalTo(other: List<T>): Boolean =
     size == other.size &&

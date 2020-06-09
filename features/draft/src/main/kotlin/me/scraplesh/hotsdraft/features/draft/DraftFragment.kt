@@ -33,7 +33,7 @@ class DraftFragment : Fragment() {
   private var teamStarts: Team by argumentNotNull()
   private val mviView: DraftView by koinLifecycleScope.inject { parametersOf(lifecycleScope) }
   private val bindings: Bindings<DraftView> by koinLifecycleScope.inject {
-    parametersOf(this, lifecycleScope, battleground, teamStarts)
+    parametersOf(lifecycleScope, battleground, teamStarts)
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
