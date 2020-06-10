@@ -3,8 +3,8 @@ object AndroidConfig {
     const val minSdkVersion = 21
     const val targetSdkVersion = 29
 
-    const val versionCode = 3
-    const val versionName = "2020.06.001"
+    const val versionCode = 4
+    const val versionName = "2020.06.002"
 
     const val applicationId = "me.scraplesh.hotsdraft"
 }

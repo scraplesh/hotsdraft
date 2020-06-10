@@ -46,7 +46,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("debug") {
-            applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("debug")
         }
     }
