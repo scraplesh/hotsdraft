@@ -1,6 +1,6 @@
 package android.content
 
-import me.scraplesh.domain.Battleground
+import me.scraplesh.hotsdraft.domain.Battleground
 import me.scraplesh.hotsdraft.common.R
 
 fun Context.getString(battleground: Battleground): String = getString(

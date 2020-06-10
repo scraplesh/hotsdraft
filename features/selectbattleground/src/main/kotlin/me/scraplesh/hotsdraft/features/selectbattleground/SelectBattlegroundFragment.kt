@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import me.scraplesh.domain.Battleground
+import me.scraplesh.hotsdraft.domain.Battleground
 import me.scraplesh.hotsdraft.common.navigation.Coordinator
 import me.scraplesh.hotsdraft.features.selectbattleground.databinding.FragmentSelectbattlegroundBinding
 import org.koin.android.ext.android.inject

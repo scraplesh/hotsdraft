@@ -7,18 +7,19 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import me.scraplesh.domain.draft.Draft
-import me.scraplesh.domain.heroes.Hero
-import me.scraplesh.domain.heroes.Role
-import me.scraplesh.domain.heroes.Universe
-import me.scraplesh.domain.heroes.filter.HeroesFilter
-import me.scraplesh.domain.heroes.filter.NotHeroFilter
-import me.scraplesh.domain.heroes.filter.RoleFilter
-import me.scraplesh.domain.heroes.filter.UniverseFilter
-import me.scraplesh.domain.heroes.sorter.HeroesSorter
-import me.scraplesh.domain.usecases.FilterHeroesUseCase
-import me.scraplesh.domain.usecases.SelectHeroUseCase
-import me.scraplesh.domain.usecases.SortHeroesUseCase
+import me.scraplesh.hotsdraft.domain.draft.Draft
+import me.scraplesh.hotsdraft.domain.heroes.Hero
+import me.scraplesh.hotsdraft.domain.heroes.Role
+import me.scraplesh.hotsdraft.domain.heroes.Universe
+import me.scraplesh.hotsdraft.domain.heroes.filter.HeroesFilter
+import me.scraplesh.hotsdraft.domain.heroes.filter.NotHeroFilter
+import me.scraplesh.hotsdraft.domain.heroes.filter.RoleFilter
+import me.scraplesh.hotsdraft.domain.heroes.filter.UniverseFilter
+import me.scraplesh.hotsdraft.domain.heroes.sorter.HeroesSorter
+import me.scraplesh.hotsdraft.domain.usecases.AnalyzedDraftUseCase
+import me.scraplesh.hotsdraft.domain.usecases.FilterHeroesUseCase
+import me.scraplesh.hotsdraft.domain.usecases.SelectHeroUseCase
+import me.scraplesh.hotsdraft.domain.usecases.SortHeroesUseCase
 import me.scraplesh.mviflow.*
 
 @FlowPreview
@@ -27,8 +28,9 @@ import me.scraplesh.mviflow.*
 class DraftFeature(
   initialState: State,
   selectHeroUseCase: SelectHeroUseCase,
-  sortHeroes: SortHeroesUseCase,
-  filterHeroes: FilterHeroesUseCase
+  sortHeroesUseCase: SortHeroesUseCase,
+  filterHeroesUseCase: FilterHeroesUseCase,
+  analyzeDraftUseCase: AnalyzedDraftUseCase
 ) :
   MviFeature<
       DraftFeature.Wish,
@@ -40,7 +42,12 @@ class DraftFeature(
     initialState = initialState,
     wishToAction = DraftWishToAction(),
     bootstrapper = DraftBootstrapper(),
-    actor = DraftActor(selectHeroUseCase, sortHeroes, filterHeroes),
+    actor = DraftActor(
+      selectHeroUseCase = selectHeroUseCase,
+      sortHeroesUseCase = sortHeroesUseCase,
+      filterHeroesUseCase = filterHeroesUseCase,
+      analyzeDraftUseCase = analyzeDraftUseCase
+    ),
     reducer = DraftReducer(),
     postProcessor = DraftPostProcessor()
   ) {
@@ -55,7 +62,7 @@ class DraftFeature(
 
   sealed class Action {
     object FilterHeroes : Action()
-    object SortAllHeroes : Action()
+    object InitialSortHeroes : Action()
     class SelectHero(val hero: Hero) : Action()
     class CheckUniverse(val universe: Universe?) : Action()
     class CheckRole(val role: Role?) : Action()
@@ -63,7 +70,6 @@ class DraftFeature(
 
   data class State(
     val draft: Draft,
-    val sorters: List<HeroesSorter>,
     val filters: List<HeroesFilter> = emptyList(),
     val sortedHeroes: List<Hero> = emptyList(),
     val filteredHeroes: List<Hero> = emptyList()
@@ -81,6 +87,7 @@ class DraftFeature(
 
     class HeroesFiltered(val heroes: List<Hero>) : Effect()
     class HeroesSorted(val heroes: List<Hero>) : Effect()
+    class AnalyzedDraft(val sorters: List<HeroesSorter>) : Effect()
   }
 
   class DraftWishToAction : WishToAction<Wish, Action> {
@@ -94,13 +101,14 @@ class DraftFeature(
   }
 
   class DraftBootstrapper : Bootstrapper<Action> {
-    override fun invoke(): Flow<Action> = flowOf(Action.SortAllHeroes)
+    override fun invoke(): Flow<Action> = flowOf(Action.InitialSortHeroes)
   }
 
   class DraftActor(
     private val selectHeroUseCase: SelectHeroUseCase,
     private val sortHeroesUseCase: SortHeroesUseCase,
-    private val filterHeroesUseCase: FilterHeroesUseCase
+    private val filterHeroesUseCase: FilterHeroesUseCase,
+    private val analyzeDraftUseCase: AnalyzedDraftUseCase
   ) : Actor<Action, State, Effect> {
 
     override fun invoke(action: Action, state: State): Flow<Effect> {
@@ -108,43 +116,52 @@ class DraftFeature(
         is Action.SelectHero -> selectHero(
           action.hero,
           state.draft,
-          state.sorters,
           state.filters
         )
         is Action.CheckUniverse -> checkUniverse(action.universe, state.filters)
         is Action.CheckRole -> checkRole(action.role, state.filters)
         Action.FilterHeroes -> filterHeroes(state.filters)
-        Action.SortAllHeroes -> sortHeroes(Hero.values().asList(), state.sorters)
+        Action.InitialSortHeroes -> initialSortHeroes(state.draft)
       }
     }
+
+    private fun initialSortHeroes(draft: Draft): Flow<Effect> =
+      analyzeDraft(draft).flatMapConcat { analyzedDraftEffect ->
+        val newSorters = (analyzedDraftEffect as Effect.AnalyzedDraft).sorters
+        sortHeroes(Hero.values().asList(), newSorters)
+      }
 
     private fun filterHeroes(filters: List<HeroesFilter>): Flow<Effect> =
       filterHeroesUseCase(Hero.values().asList(), filters).map { filteredHeroes ->
         Effect.HeroesFiltered(filteredHeroes)
       }
 
-    private fun selectHero(
-      hero: Hero,
-      draft: Draft,
-      sorters: List<HeroesSorter>,
-      filters: List<HeroesFilter>
-    ): Flow<Effect> = selectHeroUseCase(hero, draft).flatMapConcat { updatedDraft ->
-      val newFilters = filters + NotHeroFilter(hero)
-      filterHeroes(newFilters).flatMapConcat { filteredHeroesEffect ->
-        val filteredHeroes = (filteredHeroesEffect as Effect.HeroesFiltered).heroes
+    private fun selectHero(hero: Hero, draft: Draft, filters: List<HeroesFilter>): Flow<Effect> =
+      selectHeroUseCase(hero, draft).flatMapConcat { updatedDraft ->
+        val newFilters = filters + NotHeroFilter(hero)
 
-        sortHeroes(filteredHeroes, sorters).map { sortedHeroesEffect ->
-          val sortedHeroes = (sortedHeroesEffect as Effect.HeroesSorted).heroes
+        filterHeroes(newFilters).flatMapConcat { filteredHeroesEffect ->
+          val filteredHeroes = (filteredHeroesEffect as Effect.HeroesFiltered).heroes
 
-          Effect.HeroSelected(
-            draft = updatedDraft,
-            sortedHeroes = sortedHeroes,
-            filteredHeroes = filteredHeroes,
-            filters = newFilters
-          )
+          analyzeDraft(updatedDraft).flatMapConcat { analyzedDraftEffect ->
+            val newSorters = (analyzedDraftEffect as Effect.AnalyzedDraft).sorters
+
+            sortHeroes(filteredHeroes, newSorters).map { sortedHeroesEffect ->
+              val sortedHeroes = (sortedHeroesEffect as Effect.HeroesSorted).heroes
+
+              Effect.HeroSelected(
+                draft = updatedDraft,
+                sortedHeroes = sortedHeroes,
+                filteredHeroes = filteredHeroes,
+                filters = newFilters
+              )
+            }
+          }
         }
       }
-    }
+
+    private fun analyzeDraft(draft: Draft): Flow<Effect> =
+      analyzeDraftUseCase(draft).map { newSorters -> Effect.AnalyzedDraft(newSorters) }
 
     private fun sortHeroes(heroes: List<Hero>, sorters: List<HeroesSorter>): Flow<Effect> =
       sortHeroesUseCase(heroes, sorters).map { sortedHeroes -> Effect.HeroesSorted(sortedHeroes) }
@@ -187,6 +204,7 @@ class DraftFeature(
         sortedHeroes = effect.heroes,
         filteredHeroes = effect.heroes
       )
+      is Effect.AnalyzedDraft -> state
     }
   }
 

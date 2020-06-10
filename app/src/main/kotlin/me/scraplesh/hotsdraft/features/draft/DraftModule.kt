@@ -4,10 +4,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.draft.Draft
-import me.scraplesh.domain.draft.Team
-import me.scraplesh.domain.heroes.sorter.BattlegroundSorter
+import me.scraplesh.hotsdraft.domain.Battleground
+import me.scraplesh.hotsdraft.domain.draft.Draft
+import me.scraplesh.hotsdraft.domain.draft.Team
 import me.scraplesh.mviflow.Bindings
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
@@ -21,13 +20,11 @@ val draftModule = module {
   scope<DraftFragment> {
     scoped { (battleground: Battleground, teamStarts: Team) ->
       DraftFeature(
-        initialState = DraftFeature.State(
-          draft = get { parametersOf(battleground, teamStarts) },
-          sorters = listOf(BattlegroundSorter(battleground))
-        ),
+        initialState = DraftFeature.State(draft = get { parametersOf(battleground, teamStarts) }),
         selectHeroUseCase = get(),
-        sortHeroes = get(),
-        filterHeroes = get()
+        sortHeroesUseCase = get(),
+        filterHeroesUseCase = get(),
+        analyzeDraftUseCase = get()
       )
     }
     scoped<Bindings<DraftView>> { (

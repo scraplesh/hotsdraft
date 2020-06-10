@@ -15,8 +15,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.equalTo
-import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.heroes.Hero
+import me.scraplesh.hotsdraft.domain.Battleground
+import me.scraplesh.hotsdraft.domain.heroes.Hero
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
 import reactivecircus.flowbinding.android.widget.checkedChanges
 

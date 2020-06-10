@@ -9,8 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.draft.Team
+import me.scraplesh.hotsdraft.domain.Battleground
+import me.scraplesh.hotsdraft.domain.draft.Team
 import me.scraplesh.hotsdraft.common.platform.argumentNotNull
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
 import me.scraplesh.mviflow.Bindings

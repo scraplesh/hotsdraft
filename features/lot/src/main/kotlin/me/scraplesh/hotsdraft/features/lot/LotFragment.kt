@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_lot.*
-import me.scraplesh.domain.Battleground
-import me.scraplesh.domain.draft.Team
+import me.scraplesh.hotsdraft.domain.Battleground
+import me.scraplesh.hotsdraft.domain.draft.Team
 import me.scraplesh.hotsdraft.common.navigation.Coordinator
 import me.scraplesh.hotsdraft.common.platform.argumentNotNull
 import org.koin.android.ext.android.inject
