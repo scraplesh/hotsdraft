@@ -19,13 +19,8 @@ val draftModule = module {
   factory { (battleground: Battleground, teamStarts: Team) -> Draft(battleground, teamStarts) }
 
   scope<DraftFragment> {
-    scoped { (
-               coroutineScope: CoroutineScope,
-               battleground: Battleground,
-               teamStarts: Team
-             ) ->
+    scoped { (battleground: Battleground, teamStarts: Team) ->
       DraftFeature(
-        coroutineScope = coroutineScope,
         initialState = DraftFeature.State(
           draft = get { parametersOf(battleground, teamStarts) },
           sorters = listOf(BattlegroundSorter(battleground))
@@ -42,7 +37,7 @@ val draftModule = module {
                                   ) ->
       DraftBindings(
         coroutineScope = coroutineScope,
-        feature = get { parametersOf(coroutineScope, battleground, teamStarts) }
+        feature = get { parametersOf(battleground, teamStarts) }
       )
     }
     scoped { (coroutineScope: CoroutineScope) -> DraftView(coroutineScope) }

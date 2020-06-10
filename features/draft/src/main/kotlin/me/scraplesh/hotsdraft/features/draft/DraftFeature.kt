@@ -1,6 +1,5 @@
 package me.scraplesh.hotsdraft.features.draft
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -26,7 +25,6 @@ import me.scraplesh.mviflow.*
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class DraftFeature(
-  coroutineScope: CoroutineScope,
   initialState: State,
   selectHeroUseCase: SelectHeroUseCase,
   sortHeroes: SortHeroesUseCase,
@@ -39,7 +37,6 @@ class DraftFeature(
       Nothing,
       DraftFeature.State
       >(
-    coroutineScope = coroutineScope,
     initialState = initialState,
     wishToAction = DraftWishToAction(),
     bootstrapper = DraftBootstrapper(),
@@ -97,10 +94,7 @@ class DraftFeature(
   }
 
   class DraftBootstrapper : Bootstrapper<Action> {
-    override fun invoke(): Flow<Action> = flowOf(
-      Action.SortAllHeroes,
-      Action.FilterHeroes
-    )
+    override fun invoke(): Flow<Action> = flowOf(Action.SortAllHeroes)
   }
 
   class DraftActor(
@@ -114,31 +108,29 @@ class DraftFeature(
         is Action.SelectHero -> selectHero(
           action.hero,
           state.draft,
-          state.filteredHeroes,
           state.sorters,
           state.filters
         )
         is Action.CheckUniverse -> checkUniverse(action.universe, state.filters)
         is Action.CheckRole -> checkRole(action.role, state.filters)
-        Action.FilterHeroes -> filterHeroes(state.sortedHeroes, state.filters)
+        Action.FilterHeroes -> filterHeroes(state.filters)
         Action.SortAllHeroes -> sortHeroes(Hero.values().asList(), state.sorters)
       }
     }
 
-    private fun filterHeroes(heroes: List<Hero>, filters: List<HeroesFilter>): Flow<Effect> =
-      filterHeroesUseCase(heroes, filters).map { filteredHeroes ->
+    private fun filterHeroes(filters: List<HeroesFilter>): Flow<Effect> =
+      filterHeroesUseCase(Hero.values().asList(), filters).map { filteredHeroes ->
         Effect.HeroesFiltered(filteredHeroes)
       }
 
     private fun selectHero(
       hero: Hero,
       draft: Draft,
-      heroes: List<Hero>,
       sorters: List<HeroesSorter>,
       filters: List<HeroesFilter>
     ): Flow<Effect> = selectHeroUseCase(hero, draft).flatMapConcat { updatedDraft ->
       val newFilters = filters + NotHeroFilter(hero)
-      filterHeroes(heroes, newFilters).flatMapConcat { filteredHeroesEffect ->
+      filterHeroes(newFilters).flatMapConcat { filteredHeroesEffect ->
         val filteredHeroes = (filteredHeroesEffect as Effect.HeroesFiltered).heroes
 
         sortHeroes(filteredHeroes, sorters).map { sortedHeroesEffect ->
