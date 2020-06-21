@@ -1,9 +1,8 @@
 package me.scraplesh.hotsdraft.di
 
-import me.scraplesh.hotsdraft.domain.usecases.AnalyzedDraftUseCase
-import me.scraplesh.hotsdraft.domain.usecases.FilterHeroesUseCase
-import me.scraplesh.hotsdraft.domain.usecases.SelectHeroUseCase
-import me.scraplesh.hotsdraft.domain.usecases.SortHeroesUseCase
+import android.content.Context
+import me.scraplesh.hotsdraft.domain.usecases.*
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 val useCasesModule = module {
@@ -11,4 +10,5 @@ val useCasesModule = module {
   factory { SortHeroesUseCase() }
   factory { FilterHeroesUseCase() }
   factory { AnalyzedDraftUseCase() }
+  factory { (context: Context) -> GetHeroesUseCase(get { parametersOf(context) }) }
 }

@@ -1,6 +1,7 @@
 package me.scraplesh.hotsdraft.navigation
 
-enum class HotsDraftNavigationEvent :
-    me.scraplesh.hotsdraft.common.navigation.NavigationEvent {
-    ApplicationStarted
+import me.scraplesh.hotsdraft.common.navigation.NavigationEvent
+
+enum class HotsDraftNavigationEvent : NavigationEvent {
+  ApplicationStarted
 }

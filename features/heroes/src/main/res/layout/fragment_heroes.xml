@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintlayout_draft_hero_proposals"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:behavior_hideable="false"
+    tools:behavior_peekHeight="405dp"
+    tools:minHeight="405dp"
+    >
+
+    <!-- region Roles ================================================================================-->
+
+    <RadioGroup
+        android:id="@+id/radiogroup_draft_roles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_all_roles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_nine_squares_selector"
+            android:checked="true"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_tanks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_tank_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_bruisers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_bruiser_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_supports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_support_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_healers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_healer_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_melee_assassins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_melee_assassin_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_ranged_assassins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_role_ranged_assassin_selector"
+            />
+
+    </RadioGroup>
+
+    <!-- endregion -->
+
+    <!-- region Universes ================================================================================-->
+
+    <RadioGroup
+        android:id="@+id/radiogroup_draft_universes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup_draft_roles"
+        >
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_all_universes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_nine_squares_selector"
+            android:checked="true"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_warcraft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_universe_warcraft_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_starcraft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_universe_starcraft_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_diablo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_universe_diablo_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_overwatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_universe_overwatch_selector"
+            />
+
+        <RadioButton
+            android:id="@+id/radiobutton_draft_nexus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/ic_universe_nexus_selector"
+            />
+
+    </RadioGroup>
+
+    <!-- endregion -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_draft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radiogroup_draft_universes"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

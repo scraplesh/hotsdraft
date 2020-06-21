@@ -62,12 +62,14 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":mviflow"))
 
     implementation(project(":feature-draft"))
     implementation(project(":feature-lot"))
     implementation(project(":feature-selectbattleground"))
+    implementation(project(":feature-heroes"))
 
     implementation(Deps.androidxAppCompat)
     implementation(Deps.cicerone)
@@ -77,5 +79,6 @@ dependencies {
     implementation(Deps.koinScope)
     implementation(Deps.koinViewModel)
     implementation(Deps.kotlinStdLib)
+    implementation(Deps.androidxLifecycleCommon)
     implementation(Deps.material)
 }
