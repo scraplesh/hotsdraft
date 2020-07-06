@@ -4,7 +4,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import me.scraplesh.hotsdraft.domain.heroes.Hero
+import me.scraplesh.hotsdraft.domain.entity.HeroEntity
 import me.scraplesh.hotsdraft.domain.usecases.GetHeroesUseCase
 import me.scraplesh.mviflow.*
 
@@ -32,13 +32,13 @@ class HeroesFeature(initialState: State, getHeroesUseCase: GetHeroesUseCase) :
   enum class Action { GetHeroes }
 
   data class State(
-    val heroes: List<Hero> = emptyList(),
+    val heroes: List<HeroEntity> = emptyList(),
     val isLoading: Boolean = false,
     val error: Throwable? = null
   )
 
   sealed class Effect {
-    class HeroesGot(val heroes: List<Hero>) : Effect()
+    class HeroesGot(val heroes: List<HeroEntity>) : Effect()
     object StartedLoading : Effect()
     object ErrorLoadingHeroesOccurred : Effect()
   }
@@ -52,12 +52,12 @@ class HeroesFeature(initialState: State, getHeroesUseCase: GetHeroesUseCase) :
   }
 
   class HeroesActor(private val getHeroesUseCase: GetHeroesUseCase) : Actor<Action, State, Effect> {
-    override fun invoke(action: Action, state: State): Flow<Effect> = when (action) {
+    override suspend fun invoke(action: Action, state: State): Flow<Effect> = when (action) {
       Action.GetHeroes -> getHeroes()
     }
 
-    private fun getHeroes(): Flow<Effect> =
-      getHeroesUseCase().map<List<Hero>, Effect> { heroes -> Effect.HeroesGot(heroes) }
+    private suspend fun getHeroes(): Flow<Effect> =
+      getHeroesUseCase().map<List<HeroEntity>, Effect> { heroes -> Effect.HeroesGot(heroes) }
         .onStart { emit(Effect.StartedLoading) }
         .catch { emit(Effect.ErrorLoadingHeroesOccurred) }
   }

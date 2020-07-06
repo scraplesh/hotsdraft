@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi
-import me.scraplesh.hotsdraft.data.WebCrawler
 import me.scraplesh.hotsdraft.features.heroes.databinding.FragmentHeroesBinding
 import me.scraplesh.mviflow.Bindings
 import org.koin.core.parameter.parametersOf
@@ -27,10 +26,6 @@ class HeroesFragment : Fragment() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     bindings.setup(mviView)
-
-//    WebCrawler(requireContext()).loadPage("https://heroesofthestorm.com/en-us/heroes/") { html ->
-//      val a = 1
-//    }
   }
 
   override fun onCreateView(

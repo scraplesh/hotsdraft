@@ -1,13 +1,15 @@
 package me.scraplesh.hotsdraft.di
 
-import android.content.Context
-import me.scraplesh.hotsdraft.data.HeroesHearthHeroesRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import me.scraplesh.hotsdraft.data.OfficialSiteHeroesRepository
 import me.scraplesh.hotsdraft.domain.repo.HeroesRepository
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
+@ExperimentalCoroutinesApi
 val repositoryModule = module {
-  factory<HeroesRepository> { (context: Context) ->
-    HeroesHearthHeroesRepository(crawler = get { parametersOf(context) })
+  factory<HeroesRepository> {
+    OfficialSiteHeroesRepository(crawler = get { parametersOf(androidContext()) })
   }
 }

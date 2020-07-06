@@ -1,8 +1,8 @@
 package me.scraplesh.hotsdraft.domain.repo
 
 import kotlinx.coroutines.flow.Flow
-import me.scraplesh.hotsdraft.domain.heroes.Hero
+import me.scraplesh.hotsdraft.domain.entity.HeroEntity
 
 interface HeroesRepository : Repository {
-  fun getHeroes(): Flow<List<Hero>>
+  suspend fun getHeroes(): Flow<List<HeroEntity>>
 }

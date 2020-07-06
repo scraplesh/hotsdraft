@@ -2,14 +2,14 @@ package me.scraplesh.hotsdraft.features.heroes
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
+import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -17,8 +17,9 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.equalTo
-import me.scraplesh.hotsdraft.domain.heroes.Hero
+import me.scraplesh.hotsdraft.domain.entity.HeroEntity
 import me.scraplesh.hotsdraft.features.heroes.databinding.FragmentHeroesBinding
+import me.scraplesh.hotsdraft.features.heroes.databinding.ItemHeroBinding
 import reactivecircus.flowbinding.android.widget.checkedChanges
 
 @FlowPreview
@@ -43,7 +44,7 @@ class HeroesView(private val coroutineScope: CoroutineScope) :
     val rangedAssassinChecked: Boolean,
     val supportChecked: Boolean,
     val tankChecked: Boolean,
-    val heroes: List<Hero>
+    val heroes: List<HeroEntity>
   )
 
   sealed class UiEvent {
@@ -70,8 +71,12 @@ class HeroesView(private val coroutineScope: CoroutineScope) :
   private var heroProposalsList by didSet<RecyclerView> {
     layoutManager = GridLayoutManager(context, 5)
     adapter = ListDelegationAdapter(
-      adapterDelegate<Item.HeroItem, Item>(R.layout.item_hero) {
-        val heroImage: ImageView = findViewById(R.id.imageview_itemhero)
+      adapterDelegateViewBinding<Item.HeroItem, Item, ItemHeroBinding>(
+        { layoutInflater, parent -> ItemHeroBinding.inflate(layoutInflater, parent, false) }
+      ) {
+        bind {
+          binding.imageviewItemhero.load(item.hero.imgUrl)
+        }
       }
     )
       .apply {
@@ -238,7 +243,7 @@ class HeroesView(private val coroutineScope: CoroutineScope) :
   }
 
   sealed class Item {
-    class HeroItem(val hero: Hero) : Item()
+    class HeroItem(val hero: HeroEntity) : Item()
   }
 
   override suspend fun emit(value: ViewModel) {

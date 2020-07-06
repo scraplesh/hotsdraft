@@ -26,6 +26,10 @@ android {
         targetCompatibility = Versions.java
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     sourceSets.getByName("main") {
         java.srcDir("src/main/kotlin")
     }
@@ -38,15 +42,17 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":domain"))
+    implementation(project(":data"))
     implementation(project(":mviflow"))
 
-    implementation(Deps.adapterDelegatesKotlinDsl)
+    implementation(Deps.adapterDelegatesKotlinDslViewBinding)
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxConstraintLayout)
     implementation(Deps.androidxCoordinatorLayout)
     implementation(Deps.androidxLifecycleCommon)
     implementation(Deps.androidxLifecycleRuntimeKtx)
     implementation(Deps.androidxRecyclerView)
+    implementation(Deps.coil)
     implementation(Deps.coroutinesCore)
     implementation(Deps.coroutinesAndroid)
     implementation(Deps.flowBinding)

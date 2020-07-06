@@ -111,7 +111,7 @@ class DraftFeature(
     private val analyzeDraftUseCase: AnalyzedDraftUseCase
   ) : Actor<Action, State, Effect> {
 
-    override fun invoke(action: Action, state: State): Flow<Effect> {
+    override suspend fun invoke(action: Action, state: State): Flow<Effect> {
       return when (action) {
         is Action.SelectHero -> selectHero(
           action.hero,

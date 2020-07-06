@@ -13,7 +13,7 @@ class WebCrawler(context: Context) {
     addJavascriptInterface(this@WebCrawler, JAVASCRIPT_ANCHOR)
     webViewClient = object : WebViewClient() {
       override fun onPageFinished(view: WebView, url: String) {
-        loadUrl("javascript:window.$JAVASCRIPT_ANCHOR.processHtml('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
+        loadUrl("javascript:window.$JAVASCRIPT_ANCHOR.processHtml('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');")
       }
     }
   }

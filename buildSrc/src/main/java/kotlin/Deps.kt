@@ -25,11 +25,12 @@ object Deps {
     // endregion
     // region Libraries
     const val adapterDelegatesKotlinDsl = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl:${Versions.adapterDelegates}"
+    const val adapterDelegatesKotlinDslViewBinding = "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:${Versions.adapterDelegates}"
     const val cicerone = "ru.terrakok.cicerone:cicerone:${Versions.cicerone}"
+    const val coil = "io.coil-kt:coil:${Versions.coil}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}"
     const val fragment = "androidx.fragment:fragment:${Versions.fragment}"
     const val flowBinding = "io.github.reactivecircus.flowbinding:flowbinding-android:${Versions.flowBinding}"
-    const val httpClient = "cz.msebera.android:httpclient:${Versions.httpClient}"
     const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
     const val koinCore = "org.koin:koin-core:${Versions.koin}"
     const val koinScope = "org.koin:koin-androidx-scope:${Versions.koin}"

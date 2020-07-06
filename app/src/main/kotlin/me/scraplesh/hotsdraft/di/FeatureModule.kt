@@ -10,5 +10,5 @@ import org.koin.dsl.module
 @FlowPreview
 @InternalCoroutinesApi
 val featuresModule = module {
-  factory { HeroesFeature(HeroesFeature.State(), get()) }
+  factory { HeroesFeature(initialState = HeroesFeature.State(), getHeroesUseCase = get()) }
 }
