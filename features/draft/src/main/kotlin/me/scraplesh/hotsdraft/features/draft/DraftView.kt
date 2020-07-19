@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.equalTo
+import me.scraplesh.hotsdraft.common.didSet
 import me.scraplesh.hotsdraft.domain.Battleground
 import me.scraplesh.hotsdraft.domain.heroes.Hero
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding

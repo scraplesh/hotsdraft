@@ -1,4 +1,4 @@
-package me.scraplesh.hotsdraft.features.heroes
+package me.scraplesh.hotsdraft.common
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
