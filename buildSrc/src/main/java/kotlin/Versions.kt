@@ -6,7 +6,7 @@ object Versions {
     val java = JavaVersion.VERSION_1_8
     // endregion
     // region Plugins
-    const val androidGradlePlugin = "4.0.0"
+    const val androidGradlePlugin = "4.0.1"
     const val kotlinGradlePlugin = kotlin
     const val googleServicesPlugin = "4.3.3"
     // endregion
