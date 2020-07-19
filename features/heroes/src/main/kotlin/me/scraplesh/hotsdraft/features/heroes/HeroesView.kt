@@ -11,9 +11,6 @@ import coil.api.load
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.equalTo
@@ -22,9 +19,6 @@ import me.scraplesh.hotsdraft.features.heroes.databinding.FragmentHeroesBinding
 import me.scraplesh.hotsdraft.features.heroes.databinding.ItemHeroBinding
 import reactivecircus.flowbinding.android.widget.checkedChanges
 
-@FlowPreview
-@InternalCoroutinesApi
-@ExperimentalCoroutinesApi
 class HeroesView(private val coroutineScope: CoroutineScope) :
   Flow<HeroesView.UiEvent>,
   FlowCollector<HeroesView.ViewModel>,

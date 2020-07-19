@@ -20,10 +20,6 @@ import me.scraplesh.hotsdraft.domain.heroes.Hero
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
 import reactivecircus.flowbinding.android.widget.checkedChanges
 
-
-@FlowPreview
-@InternalCoroutinesApi
-@ExperimentalCoroutinesApi
 class DraftView(private val coroutineScope: CoroutineScope) :
   Flow<DraftView.UiEvent>,
   FlowCollector<DraftView.ViewModel> {

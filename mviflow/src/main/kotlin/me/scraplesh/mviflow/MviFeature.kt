@@ -1,14 +1,8 @@
 package me.scraplesh.mviflow
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 
-@ExperimentalCoroutinesApi
-@FlowPreview
-@InternalCoroutinesApi
 abstract class MviFeature<Wish, Action, Effect, News, State>(
   initialState: State,
   private val wishToAction: WishToAction<Wish, Action>,

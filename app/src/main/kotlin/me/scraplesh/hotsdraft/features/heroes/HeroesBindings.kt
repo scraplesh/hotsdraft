@@ -1,14 +1,8 @@
 package me.scraplesh.hotsdraft.features.heroes
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
 import me.scraplesh.mviflow.Bindings
 
-@FlowPreview
-@ExperimentalCoroutinesApi
-@InternalCoroutinesApi
 class HeroesBindings(coroutineScope: CoroutineScope, private val feature: HeroesFeature) :
   Bindings<HeroesView>(coroutineScope) {
 

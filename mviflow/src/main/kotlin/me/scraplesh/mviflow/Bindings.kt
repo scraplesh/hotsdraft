@@ -1,11 +1,12 @@
 package me.scraplesh.mviflow
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-@InternalCoroutinesApi
 abstract class Bindings<T>(private val coroutineScope: CoroutineScope) {
   abstract fun setup(view: T)
 

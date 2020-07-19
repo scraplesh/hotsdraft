@@ -1,16 +1,10 @@
 package me.scraplesh.hotsdraft.features.heroes
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import me.scraplesh.hotsdraft.domain.entity.HeroEntity
 import me.scraplesh.hotsdraft.domain.usecases.GetHeroesUseCase
 import me.scraplesh.mviflow.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
-@InternalCoroutinesApi
 class HeroesFeature(initialState: State, getHeroesUseCase: GetHeroesUseCase) :
   MviFeature<
       HeroesFeature.Wish,

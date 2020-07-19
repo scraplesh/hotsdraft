@@ -6,20 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.InternalCoroutinesApi
+import me.scraplesh.hotsdraft.common.platform.argumentNotNull
 import me.scraplesh.hotsdraft.domain.Battleground
 import me.scraplesh.hotsdraft.domain.draft.Team
-import me.scraplesh.hotsdraft.common.platform.argumentNotNull
 import me.scraplesh.hotsdraft.features.draft.databinding.FragmentDraftBinding
 import me.scraplesh.mviflow.Bindings
 import org.koin.core.parameter.parametersOf
 import org.koin.androidx.scope.lifecycleScope as koinLifecycleScope
 
-@FlowPreview
-@InternalCoroutinesApi
-@ExperimentalCoroutinesApi
 class DraftFragment : Fragment() {
 
   companion object {
