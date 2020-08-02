@@ -1,22 +1,19 @@
-package me.scraplesh.hotsdraft.data
+package me.scraplesh.hotsdraft.data.datasource
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import me.scraplesh.hotsdraft.data.WebCrawler
 import me.scraplesh.hotsdraft.domain.entity.HeroEntity
-import me.scraplesh.hotsdraft.domain.repo.HeroesRepository
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-@ExperimentalCoroutinesApi
-class OfficialSiteHeroesRepository(private val crawler: WebCrawler) : HeroesRepository {
-  override suspend fun getHeroes(): Flow<List<HeroEntity>> = flowOf(
+class OfficialWebsiteParser(private val crawler: WebCrawler) : DataSource {
+  suspend fun getHeroes(): Flow<List<HeroEntity>> = flowOf(
     suspendCoroutine { cont ->
-      crawler.loadPage("https://heroesofthestorm.com/en-us/heroes/") { html ->
+      crawler.loadPage("$BASE_URL$PATH_HEROES") { html ->
         cont.resume(parseHeroes(Jsoup.parse(html)))
       }
     }
@@ -58,5 +55,10 @@ class OfficialSiteHeroesRepository(private val crawler: WebCrawler) : HeroesRepo
       .takeUnless { it.isEmpty() }
       ?.split('/')
       ?.getOrNull(3)
+  }
+
+  private companion object {
+    const val BASE_URL = "https://heroesofthestorm.com/en-us"
+    const val PATH_HEROES = "/heroes/"
   }
 }
